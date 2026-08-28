@@ -1,0 +1,1626 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vida&Saúde - Sistema de Saúde</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f8fb;
+    color:#263238;
+}
+
+/* ================= LOGIN ================= */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#087f8c,#13a8ba);
+}
+
+.login-box{
+    width:400px;
+    max-width:92%;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,.18);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo-icon{
+    font-size:50px;
+}
+
+.logo h1{
+    color:#087f8c;
+    margin-top:8px;
+}
+
+.logo p{
+    color:#78909c;
+    margin-top:6px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    border:1px solid #cfd8dc;
+    border-radius:9px;
+    font-size:15px;
+    outline:none;
+}
+
+.input-group input:focus{
+    border-color:#087f8c;
+}
+
+.login-button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:9px;
+    background:#087f8c;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-button:hover{
+    background:#056a74;
+}
+
+.login-info{
+    margin-top:20px;
+    padding:12px;
+    border-radius:8px;
+    background:#eef8f9;
+    color:#547078;
+    text-align:center;
+    font-size:12px;
+}
+
+/* ================= SISTEMA ================= */
+
+.system{
+    display:none;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:250px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    background:white;
+    border-right:1px solid #e1e8eb;
+    padding:25px 18px;
+}
+
+.sidebar-logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#087f8c;
+    margin-bottom:40px;
+}
+
+.sidebar-logo span{
+    font-size:30px;
+}
+
+.sidebar-logo h2{
+    font-size:20px;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin-bottom:8px;
+}
+
+.menu button{
+    width:100%;
+    border:none;
+    background:transparent;
+    text-align:left;
+    padding:13px;
+    border-radius:8px;
+    cursor:pointer;
+    color:#546e7a;
+    font-size:15px;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#e6f7f8;
+    color:#087f8c;
+    font-weight:bold;
+}
+
+.logout{
+    position:absolute;
+    bottom:25px;
+    left:18px;
+    right:18px;
+}
+
+.logout button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#fff0f0;
+    color:#d32f2f;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* ================= PRINCIPAL ================= */
+
+.main{
+    margin-left:250px;
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    font-size:28px;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#087f8c;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* ================= CARDS ================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.card-icon{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.card h3{
+    font-size:27px;
+    margin-bottom:5px;
+}
+
+.card p{
+    color:#78909c;
+}
+
+/* ================= SEÇÕES ================= */
+
+.section{
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-header h2{
+    font-size:20px;
+}
+
+.search{
+    padding:10px 14px;
+    border:1px solid #d5dfe2;
+    border-radius:8px;
+    outline:none;
+}
+
+/* ================= TABELA ================= */
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    padding:13px;
+    color:#78909c;
+    font-size:13px;
+    border-bottom:1px solid #e8eef0;
+}
+
+td{
+    padding:15px 13px;
+    border-bottom:1px solid #edf1f2;
+}
+
+.patient{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.patient-avatar{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:#dff4f6;
+    color:#087f8c;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+}
+
+.status{
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.confirmed{
+    background:#e5f7eb;
+    color:#198754;
+}
+
+.waiting{
+    background:#fff4d6;
+    color:#a66b00;
+}
+
+/* ================= MÉDICOS ================= */
+
+.doctors{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.doctor{
+    border:1px solid #e4ecef;
+    padding:18px;
+    border-radius:12px;
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.doctor-photo{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#e5f7f8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+}
+
+.doctor h3{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.doctor p{
+    color:#78909c;
+    font-size:13px;
+    margin-top:3px;
+}
+
+/* ================= AGENDA ================= */
+
+.schedule{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.schedule-card{
+    border:1px solid #e2eaed;
+    padding:18px;
+    border-radius:12px;
+}
+
+.schedule-time{
+    color:#087f8c;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.schedule-card h3{
+    margin-top:10px;
+}
+
+.schedule-card p{
+    color:#78909c;
+    margin-top:5px;
+    font-size:13px;
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media(max-width:1100px){
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .doctors{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .schedule{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        width:70px;
+        padding:20px 10px;
+    }
+
+    .sidebar-logo h2,
+    .menu button span,
+    .logout span{
+        display:none;
+    }
+
+    .sidebar-logo{
+        justify-content:center;
+    }
+
+    .menu button{
+        text-align:center;
+        font-size:20px;
+    }
+
+    .logout{
+        left:10px;
+        right:10px;
+    }
+
+    .main{
+        margin-left:70px;
+        padding:20px;
+    }
+
+    .cards,
+    .doctors,
+    .schedule{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+LOGIN
+===================================================== -->
+
+<div class="login-page" id="loginPage">
+
+<div class="login-box">
+
+<div class="logo">
+
+<div class="logo-icon">⚕️</div>
+
+<h1>VidaSaúde</h1>
+
+<p>Sistema de Gestão em Saúde</p>
+
+</div>
+
+
+<div class="input-group">
+
+<label>CPF</label>
+
+<input
+type="text"
+id="cpf"
+maxlength="14"
+placeholder="000.000.000-00"
+oninput="formatarCPF(this)"
+>
+
+</div>
+
+
+<div class="input-group">
+
+<label>Senha</label>
+
+<input
+type="password"
+id="password"
+placeholder="Digite sua senha"
+>
+
+</div>
+
+
+<button class="login-button" onclick="login()">
+
+Entrar
+
+</button>
+
+
+<div class="login-info">
+
+<strong>Área restrita</strong><br>
+
+Utilize um dos CPFs fictícios cadastrados no sistema.
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+SISTEMA
+===================================================== -->
+
+<div class="system" id="system">
+
+
+<!-- MENU -->
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+<span>⚕️</span>
+
+<h2>VidaSaúde</h2>
+
+</div>
+
+
+<ul class="menu">
+
+<li>
+<button class="active">
+🏠 <span>Dashboard</span>
+</button>
+</li>
+
+<li>
+<button>
+📅 <span>Agendamentos</span>
+</button>
+</li>
+
+<li>
+<button>
+👨‍⚕️ <span>Médicos</span>
+</button>
+</li>
+
+<li>
+<button>
+👤 <span>Pacientes</span>
+</button>
+</li>
+
+<li>
+<button>
+📋 <span>Consultas</span>
+</button>
+</li>
+
+<li>
+<button>
+📊 <span>Relatórios</span>
+</button>
+</li>
+
+</ul>
+
+
+<div class="logout">
+
+<button onclick="logout()">
+
+🚪 <span>Sair</span>
+
+</button>
+
+</div>
+
+</aside>
+
+
+
+<!-- PRINCIPAL -->
+
+<main class="main">
+
+
+<div class="topbar">
+
+<div>
+
+<h1 id="saudacao">
+Olá! 👋
+</h1>
+
+<p style="color:#78909c;margin-top:5px;">
+
+Confira os atendimentos e agendamentos de hoje.
+
+</p>
+
+</div>
+
+
+<div class="user">
+
+<div>
+
+<strong id="nomeUsuario">
+Usuário
+</strong>
+
+<small style="display:block;color:#78909c;">
+Paciente
+</small>
+
+</div>
+
+<div class="avatar" id="avatar">
+US
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- CARDS -->
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-icon">📅</div>
+
+<h3>24</h3>
+
+<p>Consultas hoje</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">👥</div>
+
+<h3>18</h3>
+
+<p>Pacientes atendidos</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">👨‍⚕️</div>
+
+<h3>10</h3>
+
+<p>Médicos disponíveis</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">⏳</div>
+
+<h3>6</h3>
+
+<p>Aguardando atendimento</p>
+
+</div>
+
+</div>
+
+
+
+<!-- AGENDAMENTOS -->
+
+<section class="section">
+
+<div class="section-header">
+
+<h2>📅 Agendamentos de hoje</h2>
+
+<input
+class="search"
+id="search"
+placeholder="Pesquisar..."
+onkeyup="pesquisar()"
+>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Paciente</th>
+<th>Especialidade</th>
+<th>Médico</th>
+<th>Horário</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="appointments">
+
+
+<tr>
+
+<td>
+
+<div class="patient">
+
+<div class="patient-avatar">
+AM
+</div>
+
+Ana Martins
+
+</div>
+
+</td>
+
+<td>Cardiologia</td>
+
+<td>Dr. Rafael Mendes</td>
+
+<td>08:30</td>
+
+<td>
+<span class="status confirmed">
+Confirmado
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+
+<div class="patient">
+
+<div class="patient-avatar">
+CS
+</div>
+
+Carlos Souza
+
+</div>
+
+</td>
+
+<td>Ortopedia</td>
+
+<td>Dr. Felipe Rocha</td>
+
+<td>09:15</td>
+
+<td>
+<span class="status waiting">
+Aguardando
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+
+<div class="patient">
+
+<div class="patient-avatar">
+JM
+</div>
+
+João Martins
+
+</div>
+
+</td>
+
+<td>Clínica Geral</td>
+
+<td>Dra. Beatriz Lima</td>
+
+<td>10:00</td>
+
+<td>
+<span class="status confirmed">
+Confirmado
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+
+<div class="patient">
+
+<div class="patient-avatar">
+SO
+</div>
+
+Sofia Oliveira
+
+</div>
+
+</td>
+
+<td>Dermatologia</td>
+
+<td>Dra. Marina Costa</td>
+
+<td>11:30</td>
+
+<td>
+<span class="status confirmed">
+Confirmado
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+
+<div class="patient">
+
+<div class="patient-avatar">
+RM
+</div>
+
+Ricardo Melo
+
+</div>
+
+</td>
+
+<td>Neurologia</td>
+
+<td>Dr. Eduardo Alves</td>
+
+<td>13:30</td>
+
+<td>
+<span class="status waiting">
+Aguardando
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+
+<div class="patient">
+
+<div class="patient-avatar">
+CT
+</div>
+
+Camila Torres
+
+</div>
+
+</td>
+
+<td>Pediatria</td>
+
+<td>Dra. Camila Torres</td>
+
+<td>14:00</td>
+
+<td>
+<span class="status confirmed">
+Confirmado
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+
+<div class="patient">
+
+<div class="patient-avatar">
+MR
+</div>
+
+Marcos Ribeiro
+
+</div>
+
+</td>
+
+<td>Oftalmologia</td>
+
+<td>Dr. Bruno Martins</td>
+
+<td>15:00</td>
+
+<td>
+<span class="status confirmed">
+Confirmado
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+
+<div class="patient">
+
+<div class="patient-avatar">
+JL
+</div>
+
+Juliana Lima
+
+</div>
+
+</td>
+
+<td>Ginecologia</td>
+
+<td>Dra. Fernanda Alves</td>
+
+<td>16:00</td>
+
+<td>
+<span class="status waiting">
+Aguardando
+</span>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- MÉDICOS -->
+
+<section class="section">
+
+<div class="section-header">
+
+<h2>👨‍⚕️ Médicos cadastrados</h2>
+
+</div>
+
+
+<div class="doctors">
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👨‍⚕️
+</div>
+
+<div>
+
+<h3>Dr. Rafael Mendes</h3>
+
+<p>Cardiologia</p>
+
+<p>08:00 - 17:00</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👨‍⚕️
+</div>
+
+<div>
+
+<h3>Dr. Felipe Rocha</h3>
+
+<p>Ortopedia</p>
+
+<p>08:00 - 16:00</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👩‍⚕️
+</div>
+
+<div>
+
+<h3>Dra. Beatriz Lima</h3>
+
+<p>Clínica Geral</p>
+
+<p>09:00 - 18:00</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👩‍⚕️
+</div>
+
+<div>
+
+<h3>Dra. Marina Costa</h3>
+
+<p>Dermatologia</p>
+
+<p>08:30 - 17:30</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👨‍⚕️
+</div>
+
+<div>
+
+<h3>Dr. Eduardo Alves</h3>
+
+<p>Neurologia</p>
+
+<p>10:00 - 18:00</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👩‍⚕️
+</div>
+
+<div>
+
+<h3>Dra. Camila Torres</h3>
+
+<p>Pediatria</p>
+
+<p>08:00 - 15:00</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👨‍⚕️
+</div>
+
+<div>
+
+<h3>Dr. Bruno Martins</h3>
+
+<p>Oftalmologia</p>
+
+<p>09:00 - 17:00</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👩‍⚕️
+</div>
+
+<div>
+
+<h3>Dra. Fernanda Alves</h3>
+
+<p>Ginecologia</p>
+
+<p>08:00 - 16:30</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👨‍⚕️
+</div>
+
+<div>
+
+<h3>Dr. Gustavo Lima</h3>
+
+<p>Urologia</p>
+
+<p>10:00 - 18:00</p>
+
+</div>
+
+</div>
+
+
+<div class="doctor">
+
+<div class="doctor-photo">
+👩‍⚕️
+</div>
+
+<div>
+
+<h3>Dra. Renata Souza</h3>
+
+<p>Endocrinologia</p>
+
+<p>08:30 - 17:00</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- AGENDA -->
+
+<section class="section">
+
+<div class="section-header">
+
+<h2>⏰ Próximos horários</h2>
+
+</div>
+
+
+<div class="schedule">
+
+
+<div class="schedule-card">
+
+<div class="schedule-time">
+08:30
+</div>
+
+<h3>Ana Martins</h3>
+
+<p>Cardiologia</p>
+
+<p>Dr. Rafael Mendes</p>
+
+</div>
+
+
+<div class="schedule-card">
+
+<div class="schedule-time">
+09:15
+</div>
+
+<h3>Carlos Souza</h3>
+
+<p>Ortopedia</p>
+
+<p>Dr. Felipe Rocha</p>
+
+</div>
+
+
+<div class="schedule-card">
+
+<div class="schedule-time">
+10:00
+</div>
+
+<h3>João Martins</h3>
+
+<p>Clínica Geral</p>
+
+<p>Dra. Beatriz Lima</p>
+
+</div>
+
+
+<div class="schedule-card">
+
+<div class="schedule-time">
+11:30
+</div>
+
+<h3>Sofia Oliveira</h3>
+
+<p>Dermatologia</p>
+
+<p>Dra. Marina Costa</p>
+
+</div>
+
+
+<div class="schedule-card">
+
+<div class="schedule-time">
+13:30
+</div>
+
+<h3>Ricardo Melo</h3>
+
+<p>Neurologia</p>
+
+<p>Dr. Eduardo Alves</p>
+
+</div>
+
+
+<div class="schedule-card">
+
+<div class="schedule-time">
+14:00
+</div>
+
+<h3>Camila Torres</h3>
+
+<p>Pediatria</p>
+
+<p>Dra. Camila Torres</p>
+
+</div>
+
+
+<div class="schedule-card">
+
+<div class="schedule-time">
+15:00
+</div>
+
+<h3>Marcos Ribeiro</h3>
+
+<p>Oftalmologia</p>
+
+<p>Dr. Bruno Martins</p>
+
+</div>
+
+
+<div class="schedule-card">
+
+<div class="schedule-time">
+16:00
+</div>
+
+<h3>Juliana Lima</h3>
+
+<p>Ginecologia</p>
+
+<p>Dra. Fernanda Alves</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+USUÁRIOS FICTÍCIOS
+===================================================== */
+
+const usuarios = [
+
+{
+cpf:"12345678900",
+senha:"Vida@2026",
+nome:"Lucas Oliveira"
+},
+
+{
+cpf:"23456789001",
+senha:"Saude#1842",
+nome:"Mariana Santos"
+},
+
+{
+cpf:"34567890102",
+senha:"Clinica@7391",
+nome:"Pedro Almeida"
+},
+
+{
+cpf:"45678901203",
+senha:"Medico#5268",
+nome:"Ana Martins"
+},
+
+{
+cpf:"56789012304",
+senha:"Paciente@9417",
+nome:"Carlos Souza"
+},
+
+{
+cpf:"67890123405",
+senha:"Agenda#3085",
+nome:"Sofia Oliveira"
+},
+
+{
+cpf:"78901234506",
+senha:"Consulta@6724",
+nome:"Ricardo Melo"
+},
+
+{
+cpf:"89012345607",
+senha:"Clinica#8153",
+nome:"Beatriz Lima"
+},
+
+{
+cpf:"90123456708",
+senha:"Saude@4936",
+nome:"Felipe Rocha"
+},
+
+{
+cpf:"01234567809",
+senha:"Vida#2579",
+nome:"Camila Torres"
+}
+
+];
+
+
+/* =====================================================
+FORMATAÇÃO DO CPF
+===================================================== */
+
+function formatarCPF(input){
+
+let cpf=input.value.replace(/\D/g,"");
+
+cpf=cpf.substring(0,11);
+
+if(cpf.length>9){
+
+cpf=cpf.replace(
+/(\d{3})(\d{3})(\d{3})(\d{1,2})/,
+"$1.$2.$3-$4"
+);
+
+}
+
+else if(cpf.length>6){
+
+cpf=cpf.replace(
+/(\d{3})(\d{3})(\d{1,3})/,
+"$1.$2.$3"
+);
+
+}
+
+else if(cpf.length>3){
+
+cpf=cpf.replace(
+/(\d{3})(\d{1,3})/,
+"$1.$2"
+);
+
+}
+
+input.value=cpf;
+
+}
+
+
+/* =====================================================
+LOGIN
+===================================================== */
+
+function login(){
+
+const cpf=document
+.getElementById("cpf")
+.value
+.replace(/\D/g,"");
+
+const senha=document
+.getElementById("password")
+.value;
+
+
+const usuario=usuarios.find(function(user){
+
+return user.cpf===cpf &&
+user.senha===senha;
+
+});
+
+
+if(usuario){
+
+document
+.getElementById("loginPage")
+.style.display="none";
+
+document
+.getElementById("system")
+.style.display="block";
+
+
+document
+.getElementById("nomeUsuario")
+.innerText=usuario.nome;
+
+
+document
+.getElementById("saudacao")
+.innerText=
+"Olá, "+usuario.nome+" 👋";
+
+
+let iniciais=usuario.nome
+.split(" ")
+.map(nome=>nome[0])
+.slice(0,2)
+.join("")
+.toUpperCase();
+
+
+document
+.getElementById("avatar")
+.innerText=iniciais;
+
+}
+
+else{
+
+alert(
+"CPF ou senha incorretos."
+);
+
+}
+
+}
+
+
+/* =====================================================
+LOGOUT
+===================================================== */
+
+function logout(){
+
+document
+.getElementById("system")
+.style.display="none";
+
+document
+.getElementById("loginPage")
+.style.display="flex";
+
+document
+.getElementById("cpf")
+.value="";
+
+document
+.getElementById("password")
+.value="";
+
+}
+
+
+/* =====================================================
+PESQUISA
+===================================================== */
+
+function pesquisar(){
+
+const busca=document
+.getElementById("search")
+.value
+.toLowerCase();
+
+const linhas=document
+.querySelectorAll("#appointments tr");
+
+
+linhas.forEach(function(linha){
+
+const texto=linha
+.innerText
+.toLowerCase();
+
+
+if(texto.includes(busca)){
+
+linha.style.display="";
+
+}
+
+else{
+
+linha.style.display="none";
+
+}
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
+```
