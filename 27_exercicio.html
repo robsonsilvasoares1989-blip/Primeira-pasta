@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Dólar</title>
+</head>
+<body>
+
+    <h1>Conversor de Reais para Dólares</h1>
+
+    <label>Digite o valor em reais:</label>
+    <input type="number" id="reais" step="0.01">
+
+    <br><br>
+
+    <label>Digite a cotação do dólar:</label>
+    <input type="number" id="cotacao" step="0.01">
+
+    <br><br>
+
+    <button onclick="converter()">Converter</button>
+
+    <h3 id="resultado"></h3>
+
+    <script>
+        function converter() {
+            let reais = Number(document.getElementById("reais").value);
+            let cotacao = Number(document.getElementById("cotacao").value);
+
+            if (reais < 0 || cotacao <= 0 ||
+                document.getElementById("reais").value === "") {
+                document.getElementById("resultado").innerHTML =
+                    "Digite valores válidos.";
+                return;
+            }
+
+            let dolares = reais / cotacao;
+            let mensagem = "";
+
+            if (dolares < 50) {
+                mensagem = "Menor que 50 dólares.";
+            } else if (dolares <= 100) {
+                mensagem = "Entre 50 e 100 dólares.";
+            } else {
+                mensagem = "Acima de 100 dólares.";
+            }
+
+            document.getElementById("resultado").innerHTML =
+                "Valor convertido: US$ " + dolares.toFixed(2) +
+                "<br>" + mensagem;
+        }
+    </script>
+
+</body>
+</html>

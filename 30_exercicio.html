@@ -1,0 +1,30 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversor de Temperatura</title>
+</head>
+<body>
+
+    <h1>Fahrenheit para Celsius</h1>
+
+    <input type="number" id="fahrenheit" placeholder="Digite °F">
+
+    <button onclick="converter()">Converter</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function converter() {
+            let f = Number(document.getElementById("fahrenheit").value);
+            let c = (f - 32) * 5 / 9;
+
+            document.getElementById("resultado").innerHTML =
+                "Temperatura em Celsius: " + c.toFixed(2) + " °C";
+        }
+    </script>
+
+</body>
+</html>
+```

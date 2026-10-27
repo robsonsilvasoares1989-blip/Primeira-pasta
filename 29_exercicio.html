@@ -1,0 +1,30 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cubo de um Número</title>
+</head>
+<body>
+
+    <h1>Calcular o Cubo</h1>
+
+    <input type="number" id="numero" placeholder="Digite um número">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function calcular() {
+            let numero = Number(document.getElementById("numero").value);
+            let cubo = numero * numero * numero;
+
+            document.getElementById("resultado").innerHTML =
+                "O cubo do número é: " + cubo;
+        }
+    </script>
+
+</body>
+</html>
+```

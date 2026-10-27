@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>One piece</h1>
+    <input type="number" name="chapeu de palha" id="">
+    <script>
+        let h1 = document.querySelector('h1');
+        document.querySelector('input').addEventListener('change',function(){
+            h1.textContent =Number( this.value ) * 2
+        })
+    </script>
+</body>
+</html>

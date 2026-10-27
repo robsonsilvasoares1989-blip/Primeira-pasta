@@ -1,0 +1,31 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Área da Esfera</title>
+</head>
+<body>
+
+    <h1>Área da Esfera</h1>
+
+    <label>Digite o raio:</label>
+    <input type="number" id="raio">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function calcular() {
+            let raio = Number(document.getElementById("raio").value);
+            let area = 4 * Math.PI * raio * raio;
+
+            document.getElementById("resultado").innerHTML =
+                "Área da esfera: " + area.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
+```

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Exemplo</title>
+</head>
+<body>
+    <input type="text">
+    <h1></h1>
+<button>Limpar</button>
+    <script>
+   let h1 = document.querySelector('h1');
+   let input = document.querySelector('input');
+   let button = document.querySelector('button');
+   input.addEventListener('change', function (){
+            h1.textContent = 'input.value' ;
+        });
+        button.addEventListener('click', function(){
+            h1.textContent = '';
+            input.value = '';
+        });
+    </script>
+
+</body>
+</html>

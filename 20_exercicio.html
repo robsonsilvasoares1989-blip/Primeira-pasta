@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Dobro do Número</title>
+</head>
+<body>
+
+    <h2>Digite um número:</h2>
+
+    <input type="number" id="numero" onchange="dobro()">
+
+    <p id="resultado"></p>
+
+    <script>
+        function dobro() {
+            let numero = Number(document.getElementById("numero").value);
+            let resultado = numero * 2;
+
+            document.getElementById("resultado").innerHTML =
+                "O dobro é: " + resultado;
+        }
+    </script>
+
+</body>
+</html>

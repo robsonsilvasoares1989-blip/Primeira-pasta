@@ -1,0 +1,151 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparação de Números</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #111827, #1e3a8a);
+        }
+
+        .container {
+            width: 400px;
+            padding: 35px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        p {
+            color: white;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 2px #60a5fa;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        h3 {
+            margin-top: 25px;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Comparação</h1>
+
+        <p class="subtitulo">
+            Descubra qual número é maior
+        </p>
+
+        <p>Digite o primeiro número:</p>
+        <input type="number" id="caixa1">
+
+        <p>Digite o segundo número:</p>
+        <input type="number" id="caixa2">
+
+        <button>ANALISAR</button>
+
+        <h3></h3>
+
+    </div>
+
+    <script>
+
+        let caixa1 = document.querySelector("#caixa1")
+        let caixa2 = document.querySelector("#caixa2")
+        let botão = document.querySelector("button")
+        let resultado = document.querySelector("h3")
+
+        botão.addEventListener("click", function(){
+
+            if(caixa1.value > caixa2.value){
+
+                resultado.textContent =
+                "O maior número é " + caixa1.value
+
+            } else if(caixa2.value > caixa1.value){
+
+                resultado.textContent =
+                "O maior número é " + caixa2.value
+
+            } else {
+
+                resultado.textContent =
+                "Os valores são iguais!"
+
+            }
+
+        })
+
+    </script>
+
+</body>
+</html>
+```

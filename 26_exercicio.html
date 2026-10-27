@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Média</title>
+</head>
+<body>
+
+    <h1>Calcular Média do Aluno</h1>
+
+    <label>Primeira nota:</label>
+    <input type="number" id="n1" min="0" max="10" step="0.1">
+    <br><br>
+
+    <label>Segunda nota:</label>
+    <input type="number" id="n2" min="0" max="10" step="0.1">
+    <br><br>
+
+    <label>Terceira nota:</label>
+    <input type="number" id="n3" min="0" max="10" step="0.1">
+    <br><br>
+
+    <button onclick="calcular()">Calcular Média</button>
+
+    <h2 id="resultado"></h2>
+
+    <script>
+        function calcular() {
+            let n1 = document.getElementById("n1").value;
+            let n2 = document.getElementById("n2").value;
+            let n3 = document.getElementById("n3").value;
+
+            if (n1 === "" || n2 === "" || n3 === "") {
+                alert("Digite as três notas!");
+                return;
+            }
+
+            n1 = Number(n1);
+            n2 = Number(n2);
+            n3 = Number(n3);
+
+            if (n1 < 0 || n1 > 10 ||
+                n2 < 0 || n2 > 10 ||
+                n3 < 0 || n3 > 10) {
+                alert("As notas devem estar entre 0 e 10!");
+                return;
+            }
+
+            let media = (n1 + n2 + n3) / 3;
+            let situacao;
+
+            if (media < 5) {
+                situacao = "Reprovado";
+            } else if (media < 7) {
+                situacao = "Em recuperação";
+            } else {
+                situacao = "Aprovado";
+            }
+
+            document.getElementById("resultado").innerHTML =
+                "Média: " + media.toFixed(2) +
+                "<br>Situação: " + situacao;
+        }
+    </script>
+
+</body>
+</html>

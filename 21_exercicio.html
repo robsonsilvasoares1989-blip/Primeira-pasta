@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Change e Click</title>
+</head>
+<body>
+
+    <h2>Digite um texto:</h2>
+
+    <input type="text" id="campo" onchange="mostrar()">
+
+    <p id="resultado"></p>
+
+    <button onclick="limpar()">Limpar</button>
+
+    <script>
+        function mostrar() {
+            let texto = document.getElementById("campo").value;
+
+            document.getElementById("resultado").innerHTML =
+                "Conteúdo: " + texto;
+        }
+
+        function limpar() {
+            document.getElementById("campo").value = "";
+            document.getElementById("resultado").innerHTML = "";
+        }
+    </script>
+
+</body>
+</html>
