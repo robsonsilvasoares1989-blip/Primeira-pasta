@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <p>Digite um numero:</p> 
+<input type="number" name="" id="caixa"> 
+<p id="resultado"></p>  
+<script>
+    let caixa = document.querySelector("caixa");
+    let resultado = document.querySelector("#resultado");
+    caixa.addEventListener("chance", function(){
+if(this.value % 2 == 0  && this.value > 0){
+resultado.textContent = this.value + 'positivo par';
+} else if(this.value % 2!= 0 && this.value > 0){
+resultado.textContent = this.value + 'positivo impar';
+}else if(this.value % 2 == 0 && this.value < 0){
+resultado.textContent = this.value + 'negativo par';
+}else if(this.value % 2 != 0 && this.value < 0){
+resultado.textContent = this.value + 'negativo impar';
+}else {
+resultado.textContent = this.value + ' neutro';
+}
+    })
+</script>
+</body>
+</html>
+ <!-- <p>Digite um numero:</p> 
+<input type="number" name="" id="caixa"> 
+<p id="resultado"></p>  
+<script>
+    let caixa = document.querySelector("caixa");
+    let resultado = document.querySelector("#resultado");
+    caixa.addEventListener("chance", function(){
+        
+    })
+</script> -->

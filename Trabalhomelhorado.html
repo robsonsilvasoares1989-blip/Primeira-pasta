@@ -1,0 +1,7395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TACQV 2.0 - Sistema de Saúde</title>
+
+<style>
+
+:root{
+    --primary:#087f8c;
+    --primary2:#0aa6a6;
+    --dark:#073c45;
+    --bg:#f4f7f9;
+    --card:#ffffff;
+    --text:#17313a;
+    --muted:#70818a;
+    --border:#dfe8eb;
+    --success:#15966c;
+    --warning:#d98a16;
+    --danger:#d9534f;
+    --sidebar:270px;
+    --radius:18px;
+    --shadow:0 12px 35px rgba(18,52,59,.08);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* ================= LOGIN ================= */
+
+#loginScreen{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:25px;
+
+    background:
+    radial-gradient(
+        circle at 10% 10%,
+        rgba(10,166,166,.25),
+        transparent 35%
+    ),
+    linear-gradient(
+        135deg,
+        #073c45,
+        #087f8c 50%,
+        #0aa6a6
+    );
+}
+
+.login-card{
+    width:min(1050px,100%);
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+
+    background:white;
+    border-radius:28px;
+    overflow:hidden;
+
+    box-shadow:0 30px 80px rgba(0,0,0,.25);
+}
+
+.login-brand{
+    padding:55px;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        150deg,
+        #075d67,
+        #0aa6a6
+    );
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.logo{
+    width:65px;
+    height:65px;
+
+    border-radius:18px;
+
+    background:white;
+    color:var(--primary);
+
+    display:grid;
+    place-items:center;
+
+    font-size:25px;
+    font-weight:900;
+
+    margin-bottom:22px;
+}
+
+.login-brand h1{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.login-brand p{
+    line-height:1.7;
+    opacity:.9;
+}
+
+.feature-list{
+    list-style:none;
+    margin-top:30px;
+
+    display:grid;
+    gap:13px;
+}
+
+.feature-list li{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.feature-list span{
+    width:27px;
+    height:27px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.18);
+
+    display:grid;
+    place-items:center;
+}
+
+.login-form{
+    padding:48px;
+}
+
+.login-form h2{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.sub{
+    color:var(--muted);
+    margin-bottom:28px;
+}
+
+.field{
+    margin-bottom:16px;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.field input,
+.field select,
+.field textarea{
+
+    width:100%;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    padding:12px;
+
+    outline:none;
+
+    background:white;
+    color:var(--text);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    border-color:var(--primary);
+
+    box-shadow:
+    0 0 0 3px rgba(8,127,140,.1);
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.password-toggle{
+    position:absolute;
+
+    right:8px;
+    top:7px;
+
+    border:0;
+    background:transparent;
+
+    padding:7px;
+
+    color:var(--muted);
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn,
+.ghost-btn{
+
+    border:0;
+
+    border-radius:11px;
+
+    padding:12px 16px;
+
+    font-weight:bold;
+
+    transition:.2s;
+}
+
+.primary-btn{
+    background:
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary2)
+    );
+
+    color:white;
+}
+
+.primary-btn:hover{
+    transform:translateY(-1px);
+}
+
+.secondary-btn{
+    background:#eaf6f7;
+    color:var(--dark);
+}
+
+.danger-btn{
+    background:#fff0ef;
+    color:var(--danger);
+}
+
+.ghost-btn{
+    background:transparent;
+    color:var(--muted);
+}
+
+.remember{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:13px;
+
+    color:var(--muted);
+
+    margin:10px 0 18px;
+}
+
+.demo-box{
+    margin-top:18px;
+
+    padding:14px;
+
+    border:1px dashed #b8d5d8;
+
+    background:#f5fbfb;
+
+    border-radius:12px;
+
+    font-size:12px;
+
+    color:#536870;
+}
+
+.error{
+    color:var(--danger);
+    font-size:13px;
+    min-height:18px;
+    margin:10px 0;
+}
+
+/* ================= SIDEBAR ================= */
+
+#app{
+    display:none;
+}
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:var(--sidebar);
+
+    background:#082f37;
+
+    color:#d8eef0;
+
+    padding:20px 14px;
+
+    overflow:auto;
+
+    z-index:30;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:8px 10px 24px;
+}
+
+.mini-logo{
+    width:44px;
+    height:44px;
+
+    border-radius:13px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0aa6a6,
+        #65d6d1
+    );
+
+    color:#06383f;
+
+    display:grid;
+    place-items:center;
+
+    font-weight:900;
+}
+
+.brand strong{
+    font-size:19px;
+}
+
+.brand small{
+    display:block;
+    color:#8bb7bc;
+    margin-top:2px;
+}
+
+.nav{
+    display:grid;
+    gap:5px;
+}
+
+.nav button{
+    border:0;
+
+    background:transparent;
+
+    color:#a9c6ca;
+
+    text-align:left;
+
+    padding:11px 12px;
+
+    border-radius:11px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-weight:bold;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:rgba(255,255,255,.09);
+    color:white;
+}
+
+.section-title{
+    font-size:10px;
+
+    color:#648e94;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.2px;
+
+    padding:16px 12px 6px;
+}
+
+.user-mini{
+    margin-top:20px;
+
+    padding:13px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.06);
+
+    display:flex;
+
+    gap:10px;
+
+    align-items:center;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    background:#d6f4f3;
+
+    color:#086b75;
+
+    display:grid;
+
+    place-items:center;
+
+    font-weight:900;
+}
+
+.user-mini strong{
+    display:block;
+    font-size:13px;
+}
+
+.user-mini small{
+    color:#82aeb3;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:var(--sidebar);
+
+    min-height:100vh;
+}
+
+.topbar{
+    height:76px;
+
+    background:white;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 28px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:20;
+}
+
+.top-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.mobile-menu{
+    display:none;
+
+    border:0;
+
+    background:#eef7f8;
+
+    padding:10px;
+
+    border-radius:10px;
+}
+
+.global-search{
+    width:400px;
+    position:relative;
+}
+
+.global-search input{
+    width:100%;
+
+    padding:11px 14px 11px 40px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    outline:none;
+}
+
+.global-search span{
+    position:absolute;
+
+    left:13px;
+    top:10px;
+
+    color:var(--muted);
+}
+
+.top-actions{
+    display:flex;
+    gap:8px;
+}
+
+.icon-btn{
+
+    border:0;
+
+    background:#f2f7f8;
+
+    width:40px;
+    height:40px;
+
+    border-radius:11px;
+
+    color:#45636b;
+
+    position:relative;
+}
+
+.badge{
+
+    position:absolute;
+
+    right:-2px;
+    top:-3px;
+
+    background:var(--danger);
+
+    color:white;
+
+    font-size:9px;
+
+    min-width:17px;
+    height:17px;
+
+    border-radius:20px;
+
+    display:grid;
+
+    place-items:center;
+
+    border:2px solid white;
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+    padding:28px;
+
+    max-width:1600px;
+
+    margin:auto;
+}
+
+.page-head{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:22px;
+}
+
+.page-head h1{
+    font-size:29px;
+}
+
+.page-head p{
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.head-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+/* ================= CARDS ================= */
+
+.kpis{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:16px;
+
+    margin-bottom:20px;
+}
+
+.kpi{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    border-radius:var(--radius);
+
+    padding:19px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+}
+
+.label{
+    color:var(--muted);
+
+    font-size:13px;
+
+    font-weight:bold;
+}
+
+.value{
+
+    font-size:30px;
+
+    font-weight:900;
+
+    margin-top:8px;
+}
+
+.trend{
+
+    font-size:11px;
+
+    margin-top:7px;
+
+    color:var(--success);
+}
+
+.kpi-icon{
+
+    width:45px;
+    height:45px;
+
+    border-radius:14px;
+
+    background:#eaf7f7;
+
+    display:grid;
+
+    place-items:center;
+
+    color:var(--primary);
+
+    font-size:20px;
+}
+
+.grid-2{
+
+    display:grid;
+
+    grid-template-columns:
+    1.35fr .85fr;
+
+    gap:18px;
+}
+
+.grid-3{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:16px;
+}
+
+.card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+    padding:20px;
+}
+
+.card-head{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:16px;
+}
+
+.card-head h3{
+    font-size:16px;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow:auto;
+}
+
+.table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:700px;
+}
+
+.table th,
+.table td{
+
+    text-align:left;
+
+    padding:13px 10px;
+
+    border-bottom:1px solid var(--border);
+
+    font-size:13px;
+}
+
+.table th{
+
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    color:var(--muted);
+
+    background:#fafcfc;
+}
+
+.table tr:hover td{
+    background:#fbfefe;
+}
+
+/* ================= STATUS ================= */
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:5px 9px;
+
+    border-radius:30px;
+
+    font-size:11px;
+
+    font-weight:bold;
+}
+
+.status:before{
+
+    content:"";
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:currentColor;
+}
+
+.confirmed{
+
+    color:#087b59;
+
+    background:#e9f8f2;
+}
+
+.pending{
+
+    color:#a66b0c;
+
+    background:#fff5df;
+}
+
+.cancelled{
+
+    color:#b63d39;
+
+    background:#ffeded;
+}
+
+.done{
+
+    color:#496b77;
+
+    background:#eef3f5;
+}
+
+/* ================= CHART ================= */
+
+.chart{
+
+    height:220px;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:12px;
+
+    padding:15px 5px 0;
+}
+
+.bar-col{
+
+    flex:1;
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    gap:7px;
+}
+
+.bar{
+
+    width:38px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #16b5ad,
+        var(--primary)
+    );
+
+    border-radius:
+    8px 8px 3px 3px;
+}
+
+.bar-col small{
+    font-size:10px;
+    color:var(--muted);
+}
+
+/* ================= ACTIVITY ================= */
+
+.activity{
+    display:grid;
+    gap:14px;
+}
+
+.activity-item{
+    display:flex;
+    gap:11px;
+}
+
+.activity-dot{
+
+    width:9px;
+    height:9px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    margin-top:6px;
+}
+
+.activity-item strong{
+    font-size:13px;
+}
+
+.activity-item p{
+
+    font-size:12px;
+
+    color:var(--muted);
+
+    margin-top:3px;
+}
+
+/* ================= TOOLBAR ================= */
+
+.toolbar{
+
+    display:flex;
+
+    gap:9px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:15px;
+}
+
+.toolbar input,
+.toolbar select{
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    padding:11px;
+
+    background:white;
+
+    color:var(--text);
+}
+
+.toolbar .grow{
+    flex:1;
+}
+
+/* ================= DOCTORS ================= */
+
+.doctor-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:16px;
+}
+
+.doctor-card{
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:17px;
+
+    background:white;
+}
+
+.doctor-top{
+
+    display:flex;
+
+    gap:11px;
+
+    align-items:center;
+
+    margin-bottom:14px;
+}
+
+.doctor-top .avatar{
+
+    width:48px;
+    height:48px;
+}
+
+.doctor-card h4{
+    font-size:14px;
+}
+
+.doctor-card p{
+
+    font-size:12px;
+
+    color:var(--muted);
+
+    margin-top:3px;
+}
+
+.doctor-meta{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:12px;
+}
+
+/* ================= AGENDA ================= */
+
+.agenda-grid{
+
+    display:grid;
+
+    grid-template-columns:260px 1fr;
+
+    gap:18px;
+}
+
+.slots{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:12px;
+}
+
+.slot{
+
+    border:1px solid var(--border);
+
+    background:white;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    text-align:center;
+}
+
+.slot strong{
+    display:block;
+}
+
+.slot small{
+
+    display:block;
+
+    color:var(--muted);
+
+    margin:5px 0 10px;
+}
+
+.slot.available{
+
+    background:#effafa;
+}
+
+.slot.occupied{
+
+    background:#f8eded;
+
+    border-color:#f0d1cf;
+
+    color:#a54843;
+
+    cursor:not-allowed;
+}
+
+/* ================= FORMS ================= */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:14px;
+}
+
+.form-grid .full{
+    grid-column:1/-1;
+}
+
+.form-actions{
+
+    display:flex;
+
+    gap:8px;
+
+    justify-content:flex-end;
+
+    margin-top:10px;
+}
+
+/* ================= PATIENT ================= */
+
+.patient-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:13px;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+}
+
+/* ================= TIMELINE ================= */
+
+.timeline{
+    display:grid;
+    gap:15px;
+}
+
+.timeline-item{
+
+    display:grid;
+
+    grid-template-columns:
+    95px 20px 1fr;
+
+    gap:10px;
+}
+
+.timeline-time{
+
+    font-size:11px;
+
+    color:var(--muted);
+
+    text-align:right;
+}
+
+.timeline-line{
+    position:relative;
+}
+
+.timeline-line:before{
+
+    content:"";
+
+    width:10px;
+    height:10px;
+
+    background:var(--primary);
+
+    border-radius:50%;
+
+    display:block;
+
+    margin:4px auto;
+}
+
+.timeline-line:after{
+
+    content:"";
+
+    position:absolute;
+
+    top:14px;
+    bottom:-18px;
+
+    width:1px;
+
+    background:var(--border);
+
+    left:50%;
+}
+
+.timeline-item:last-child
+.timeline-line:after{
+    display:none;
+}
+
+.timeline-body strong{
+    font-size:13px;
+}
+
+.timeline-body p{
+
+    font-size:12px;
+
+    color:var(--muted);
+
+    margin-top:3px;
+}
+
+/* ================= NOTICE ================= */
+
+.notice{
+
+    padding:14px;
+
+    border-radius:13px;
+
+    background:#effafa;
+
+    border:1px solid #cde8e9;
+
+    color:#245e65;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+.warning{
+
+    background:#fff8e8;
+
+    border-color:#f0dfb5;
+
+    color:#7c5a1b;
+}
+
+/* ================= MODAL ================= */
+
+.modal-backdrop{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(7,28,34,.56);
+
+    z-index:100;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.modal-backdrop.open{
+    display:flex;
+}
+
+.modal{
+
+    width:min(680px,100%);
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:22px;
+
+    box-shadow:
+    0 30px 90px rgba(0,0,0,.25);
+}
+
+.modal-head{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.close{
+
+    border:0;
+
+    background:#f1f5f6;
+
+    width:34px;
+    height:34px;
+
+    border-radius:10px;
+
+    font-size:20px;
+}
+
+/* ================= TOAST ================= */
+
+.toast-wrap{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:20px;
+
+    z-index:200;
+
+    display:grid;
+
+    gap:9px;
+
+    width:min(360px,calc(100vw - 40px));
+}
+
+.toast{
+
+    background:#092f37;
+
+    color:white;
+
+    border-radius:13px;
+
+    padding:13px 15px;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.2);
+
+    font-size:13px;
+
+    display:flex;
+
+    gap:10px;
+}
+
+/* ================= DARK ================= */
+
+.dark{
+
+    --bg:#0e1a1e;
+
+    --card:#14252a;
+
+    --text:#e3f0f1;
+
+    --muted:#91a9ae;
+
+    --border:#294046;
+
+}
+
+.dark .topbar{
+    background:#122126;
+}
+
+.dark .field input,
+.dark .field select,
+.dark .field textarea,
+.dark .toolbar input,
+.dark .toolbar select{
+
+    background:#102025;
+
+    color:#e3f0f1;
+
+    border-color:#294046;
+}
+
+.dark .table th{
+    background:#102025;
+}
+
+.dark .doctor-card,
+.dark .slot{
+    background:#14252a;
+}
+
+.dark .secondary-btn{
+    background:#19383e;
+}
+
+.dark .icon-btn{
+    background:#19383e;
+    color:#c7dfe2;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
+    .kpis{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .doctor-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:800px){
+
+    :root{
+        --sidebar:0px;
+    }
+
+    .sidebar{
+
+        transform:translateX(-280px);
+
+        transition:.25s;
+
+        width:270px;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .global-search{
+        width:42vw;
+    }
+
+    .agenda-grid{
+        grid-template-columns:1fr;
+    }
+
+    .slots{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .content{
+        padding:17px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .global-search{
+        display:none;
+    }
+
+    .kpis{
+        grid-template-columns:1fr;
+    }
+
+    .doctor-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid .full{
+        grid-column:auto;
+    }
+
+    .page-head{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .login-card{
+        grid-template-columns:1fr;
+    }
+
+    .login-brand{
+        display:none;
+    }
+
+}
+
+/* ================= PRINT ================= */
+
+@media print{
+
+    .sidebar,
+    .topbar,
+    .head-actions,
+    .toolbar{
+        display:none!important;
+    }
+
+    .main{
+        margin:0;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ==========================================================
+LOGIN
+========================================================== -->
+
+<div id="loginScreen">
+
+<div class="login-card">
+
+<div class="login-brand">
+
+<div class="logo">
+TQ
+</div>
+
+<h1>TACQV 2.0</h1>
+
+<p>
+Tecnologia Aplicada ao Cuidado e Qualidade de Vida.
+Plataforma acadêmica demonstrativa para gestão de serviços
+de saúde.
+</p>
+
+<ul class="feature-list">
+
+<li>
+<span>✓</span>
+Agenda inteligente
+</li>
+
+<li>
+<span>✓</span>
+Consultas e exames
+</li>
+
+<li>
+<span>✓</span>
+Prontuários fictícios
+</li>
+
+<li>
+<span>✓</span>
+Relatórios
+</li>
+
+<li>
+<span>✓</span>
+Banco local
+</li>
+
+</ul>
+
+</div>
+
+<div class="login-form">
+
+<h2>Acesso ao sistema</h2>
+
+<p class="sub">
+Entre com um usuário de demonstração.
+</p>
+
+<div class="field">
+
+<label>
+CPF
+</label>
+
+<input
+id="loginCpf"
+maxlength="11"
+placeholder="Digite seu CPF"
+>
+
+</div>
+
+<div class="field">
+
+<label>
+Senha
+</label>
+
+<div class="input-wrap">
+
+<input
+id="loginSenha"
+type="password"
+placeholder="Digite sua senha"
+>
+
+<button
+class="password-toggle"
+onclick="togglePassword()"
+>
+👁
+</button>
+
+</div>
+
+</div>
+
+<label class="remember">
+
+<input
+type="checkbox"
+id="rememberMe"
+>
+
+Lembrar acesso
+
+</label>
+
+<button
+class="primary-btn"
+style="width:100%"
+onclick="login()"
+>
+ENTRAR NO TACQV
+</button>
+
+<div
+id="loginError"
+class="error"
+></div>
+
+<div class="demo-box">
+
+<b>ACESSO PRINCIPAL</b>
+
+<br><br>
+
+CPF:
+<b>11111111111</b>
+
+<br>
+
+Senha:
+<b>123456</b>
+
+<br><br>
+
+Todos os outros usuários podem ser
+consultados dentro do sistema.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ==========================================================
+APLICAÇÃO
+========================================================== -->
+
+<div id="app">
+
+<!-- SIDEBAR -->
+
+<aside
+class="sidebar"
+id="sidebar"
+>
+
+<div class="brand">
+
+<div class="mini-logo">
+TQ
+</div>
+
+<div>
+
+<strong>
+TACQV 2.0
+</strong>
+
+<small>
+Sistema de Saúde
+</small>
+
+</div>
+
+</div>
+
+<nav class="nav">
+
+<div class="section-title">
+Principal
+</div>
+
+<button
+data-section="dashboard"
+onclick="showSection('dashboard')"
+>
+▦ Dashboard
+</button>
+
+<button
+data-section="agenda"
+onclick="showSection('agenda')"
+>
+◷ Agenda
+</button>
+
+<button
+data-section="consultas"
+onclick="showSection('consultas')"
+>
+☑ Consultas
+</button>
+
+<button
+data-section="exames"
+onclick="showSection('exames')"
+>
+⌁ Exames
+</button>
+
+
+<div class="section-title">
+Cadastros
+</div>
+
+<button
+data-section="medicos"
+onclick="showSection('medicos')"
+>
+♙ Médicos
+</button>
+
+<button
+data-section="pacientes"
+onclick="showSection('pacientes')"
+>
+♙ Pacientes
+</button>
+
+<button
+data-section="prontuarios"
+onclick="showSection('prontuarios')"
+>
+▤ Prontuários
+</button>
+
+
+<div class="section-title">
+Gestão
+</div>
+
+<button
+data-section="historico"
+onclick="showSection('historico')"
+>
+◴ Histórico
+</button>
+
+<button
+data-section="notificacoes"
+onclick="showSection('notificacoes')"
+>
+♢ Notificações
+</button>
+
+<button
+data-section="relatorios"
+onclick="showSection('relatorios')"
+>
+▥ Relatórios
+</button>
+
+<button
+data-section="unidades"
+onclick="showSection('unidades')"
+>
+⌂ Unidades
+</button>
+
+
+<div class="section-title">
+Conta
+</div>
+
+<button
+data-section="perfil"
+onclick="showSection('perfil')"
+>
+◎ Meu Perfil
+</button>
+
+<button
+data-section="config"
+onclick="showSection('config')"
+>
+⚙ Configurações
+</button>
+
+<button onclick="logout()">
+↪ Sair
+</button>
+
+</nav>
+
+
+<div class="user-mini">
+
+<div
+class="avatar"
+id="sideAvatar"
+>
+LA
+</div>
+
+<div>
+
+<strong id="sideName">
+Usuário
+</strong>
+
+<small id="sideRole">
+Paciente
+</small>
+
+</div>
+
+</div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+
+<div class="top-left">
+
+<button
+class="mobile-menu"
+onclick="toggleSidebar()"
+>
+☰
+</button>
+
+<div class="global-search">
+
+<span>
+⌕
+</span>
+
+<input
+id="globalSearch"
+placeholder="Buscar no sistema..."
+oninput="globalSearch(this.value)"
+>
+
+</div>
+
+</div>
+
+
+<div class="top-actions">
+
+<button
+class="icon-btn"
+onclick="showSection('notificacoes')"
+>
+♢
+
+<span
+class="badge"
+id="notificationBadge"
+>
+0
+</span>
+
+</button>
+
+<button
+class="icon-btn"
+onclick="toggleTheme()"
+>
+☼
+</button>
+
+<button
+class="icon-btn"
+onclick="showSection('perfil')"
+>
+◎
+</button>
+
+</div>
+
+</header>
+
+
+<div class="content">
+
+
+<!-- ==========================================================
+DASHBOARD
+========================================================== -->
+
+<section
+id="dashboard"
+class="section active"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Olá,
+<span id="welcomeName">
+Usuário
+</span>
+👋
+</h1>
+
+<p id="todayText">
+Painel geral do TACQV.
+</p>
+
+</div>
+
+<div class="head-actions">
+
+<button
+class="secondary-btn"
+onclick="showSection('agenda')"
+>
+Ver agenda
+</button>
+
+<button
+class="primary-btn"
+onclick="openAppointmentModal()"
+>
++ Nova consulta
+</button>
+
+</div>
+
+</div>
+
+
+<div class="kpis">
+
+
+<div class="kpi">
+
+<div>
+
+<div class="label">
+Consultas hoje
+</div>
+
+<div
+class="value"
+id="kpiToday"
+>
+0
+</div>
+
+<div class="trend">
+● Agenda atualizada
+</div>
+
+</div>
+
+<div class="kpi-icon">
+☑
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div>
+
+<div class="label">
+Exames
+</div>
+
+<div
+class="value"
+id="kpiExams"
+>
+0
+</div>
+
+<div class="trend">
+● Próximos atendimentos
+</div>
+
+</div>
+
+<div class="kpi-icon">
+⌁
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div>
+
+<div class="label">
+Pacientes
+</div>
+
+<div
+class="value"
+id="kpiPatients"
+>
+0
+</div>
+
+<div class="trend">
+● Base acadêmica
+</div>
+
+</div>
+
+<div class="kpi-icon">
+♙
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div>
+
+<div class="label">
+Médicos
+</div>
+
+<div
+class="value"
+id="kpiDoctors"
+>
+0
+</div>
+
+<div class="trend">
+● Cadastrados
+</div>
+
+</div>
+
+<div class="kpi-icon">
+✚
+</div>
+
+</div>
+
+</div>
+
+
+<div class="grid-2">
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Consultas nos últimos 7 dias
+</h3>
+
+<span
+class="muted"
+id="chartTotal"
+>
+0 registros
+</span>
+
+</div>
+
+<div
+class="chart"
+id="consultChart"
+>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Próximos compromissos
+</h3>
+
+</div>
+
+<div
+id="nextAppointments"
+class="activity"
+>
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="grid-2">
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Atividade recente
+</h3>
+
+</div>
+
+<div
+id="activityFeed"
+class="activity"
+>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Status da operação
+</h3>
+
+</div>
+
+<div style="display:grid;gap:14px">
+
+
+<div>
+
+<div style="display:flex;justify-content:space-between">
+
+<b>Agenda</b>
+
+<span>
+82%
+</span>
+
+</div>
+
+<div class="progress">
+<div style="width:82%"></div>
+</div>
+
+</div>
+
+
+<div>
+
+<div style="display:flex;justify-content:space-between">
+
+<b>Exames</b>
+
+<span>
+64%
+</span>
+
+</div>
+
+<div class="progress">
+<div style="width:64%"></div>
+</div>
+
+</div>
+
+
+<div>
+
+<div style="display:flex;justify-content:space-between">
+
+<b>Cadastros</b>
+
+<span>
+91%
+</span>
+
+</div>
+
+<div class="progress">
+<div style="width:91%"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+AGENDA
+========================================================== -->
+
+<section
+id="agenda"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Agenda inteligente
+</h1>
+
+<p>
+Visualize horários disponíveis e ocupados.
+</p>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="openAppointmentModal()"
+>
++ Agendar consulta
+</button>
+
+</div>
+
+
+<div class="agenda-grid">
+
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Data
+</label>
+
+<input
+type="date"
+id="agendaDate"
+onchange="renderAgenda()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Médico
+</label>
+
+<select
+id="agendaDoctor"
+onchange="renderAgenda()"
+>
+<option value="">
+Todos os médicos
+</option>
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Unidade
+</label>
+
+<select
+id="agendaUnit"
+onchange="renderAgenda()"
+>
+<option value="">
+Todas as unidades
+</option>
+</select>
+
+</div>
+
+
+<div class="notice">
+
+Clique em um horário disponível
+para agendar uma consulta.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-head">
+
+<div>
+
+<h2
+id="agendaDateTitle"
+>
+—
+</h2>
+
+<span class="muted">
+Horários do dia
+</span>
+
+</div>
+
+<span class="status confirmed">
+Atualizada
+</span>
+
+</div>
+
+
+<div
+class="slots"
+id="slots"
+>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+CONSULTAS
+========================================================== -->
+
+<section
+id="consultas"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Consultas
+</h1>
+
+<p>
+Gerencie os agendamentos.
+</p>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="openAppointmentModal()"
+>
++ Nova consulta
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="toolbar">
+
+<input
+class="grow"
+id="consultSearch"
+placeholder="Buscar paciente ou médico..."
+oninput="renderConsultas()"
+>
+
+<select
+id="consultStatus"
+onchange="renderConsultas()"
+>
+
+<option value="">
+Todos os status
+</option>
+
+<option>
+Confirmada
+</option>
+
+<option>
+Pendente
+</option>
+
+<option>
+Concluída
+</option>
+
+<option>
+Cancelada
+</option>
+
+</select>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>
+Data
+</th>
+
+<th>
+Horário
+</th>
+
+<th>
+Paciente
+</th>
+
+<th>
+Médico
+</th>
+
+<th>
+Especialidade
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Ações
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="consultTable"
+>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+EXAMES
+========================================================== -->
+
+<section
+id="exames"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Exames
+</h1>
+
+<p>
+Agendamento e acompanhamento.
+</p>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="openExamModal()"
+>
++ Agendar exame
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="toolbar">
+
+<input
+class="grow"
+id="examSearch"
+placeholder="Buscar exame..."
+oninput="renderExames()"
+>
+
+<select
+id="examStatus"
+onchange="renderExames()"
+>
+
+<option value="">
+Todos
+</option>
+
+<option>
+Agendado
+</option>
+
+<option>
+Realizado
+</option>
+
+<option>
+Cancelado
+</option>
+
+</select>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>
+Data
+</th>
+
+<th>
+Exame
+</th>
+
+<th>
+Paciente
+</th>
+
+<th>
+Unidade
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Ações
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="examTable"
+>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+MEDICOS
+========================================================== -->
+
+<section
+id="medicos"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Médicos
+</h1>
+
+<p>
+Profissionais cadastrados.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="toolbar">
+
+<input
+class="grow"
+id="doctorSearch"
+placeholder="Pesquisar médico..."
+oninput="renderDoctors()"
+>
+
+<select
+id="doctorSpecialty"
+onchange="renderDoctors()"
+>
+
+<option value="">
+Todas
+</option>
+
+</select>
+
+</div>
+
+
+<div
+class="doctor-grid"
+id="doctorGrid"
+>
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+PACIENTES
+========================================================== -->
+
+<section
+id="pacientes"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Pacientes
+</h1>
+
+<p>
+Cadastro de pacientes fictícios.
+</p>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="openPatientModal()"
+>
++ Novo paciente
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="toolbar">
+
+<input
+class="grow"
+id="patientSearch"
+placeholder="Buscar paciente..."
+oninput="renderPatients()"
+>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>
+Código
+</th>
+
+<th>
+Paciente
+</th>
+
+<th>
+CPF
+</th>
+
+<th>
+Nascimento
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Ações
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="patientTable"
+>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+PRONTUARIOS
+========================================================== -->
+
+<section
+id="prontuarios"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Prontuários
+</h1>
+
+<p>
+Registros exclusivamente fictícios.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="grid-2">
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Paciente
+</h3>
+
+</div>
+
+<select
+id="recordPatient"
+onchange="renderRecord()"
+style="width:100%;padding:12px"
+>
+</select>
+
+<div
+id="recordSummary"
+style="margin-top:18px"
+>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Histórico
+</h3>
+
+</div>
+
+<div
+id="recordTimeline"
+class="timeline"
+>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+HISTORICO
+========================================================== -->
+
+<section
+id="historico"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Histórico
+</h1>
+
+<p>
+Registro das ações realizadas.
+</p>
+
+</div>
+
+<button
+class="danger-btn"
+onclick="clearHistory()"
+>
+Limpar histórico
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div
+id="historyTimeline"
+class="timeline"
+>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+NOTIFICACOES
+========================================================== -->
+
+<section
+id="notificacoes"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Notificações
+</h1>
+
+<p>
+Avisos do sistema.
+</p>
+
+</div>
+
+<button
+class="secondary-btn"
+onclick="markAllRead()"
+>
+Marcar todas como lidas
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div
+id="notificationList"
+class="activity"
+>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+RELATORIOS
+========================================================== -->
+
+<section
+id="relatorios"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Relatórios
+</h1>
+
+<p>
+Indicadores da demonstração.
+</p>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="window.print()"
+>
+Imprimir
+</button>
+
+</div>
+
+
+<div class="kpis">
+
+<div class="kpi">
+
+<div>
+
+<div class="label">
+Consultas
+</div>
+
+<div
+class="value"
+id="reportConsultas"
+>
+0
+</div>
+
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div>
+
+<div class="label">
+Confirmadas
+</div>
+
+<div
+class="value"
+id="reportConfirmed"
+>
+0
+</div>
+
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div>
+
+<div class="label">
+Exames
+</div>
+
+<div
+class="value"
+id="reportExams"
+>
+0
+</div>
+
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div>
+
+<div class="label">
+Pacientes
+</div>
+
+<div
+class="value"
+id="reportPatients"
+>
+0
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="grid-2">
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Por especialidade
+</h3>
+
+</div>
+
+<div
+id="specialtyReport"
+>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Por status
+</h3>
+
+</div>
+
+<div
+id="statusReport"
+>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+UNIDADES
+========================================================== -->
+
+<section
+id="unidades"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Unidades TACQV
+</h1>
+
+<p>
+Locais fictícios.
+</p>
+
+</div>
+
+</div>
+
+
+<div
+class="grid-3"
+id="unitGrid"
+>
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+PERFIL
+========================================================== -->
+
+<section
+id="perfil"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Meu perfil
+</h1>
+
+<p>
+Dados da conta conectada.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="grid-2">
+
+
+<div class="card">
+
+<div style="display:flex;gap:15px;align-items:center;margin-bottom:22px">
+
+<div
+class="avatar"
+id="profileAvatar"
+style="width:70px;height:70px;font-size:22px"
+>
+LA
+</div>
+
+<div>
+
+<h2 id="profileName">
+—
+</h2>
+
+<p
+class="muted"
+id="profileRole"
+>
+—
+</p>
+
+</div>
+
+</div>
+
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>
+Nome
+</label>
+
+<input
+id="profileNameInput"
+readonly
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+CPF
+</label>
+
+<input
+id="profileCpf"
+readonly
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Código
+</label>
+
+<input
+id="profileCode"
+readonly
+>
+
+</div>
+
+<div class="field">
+
+<label>
+Status
+</label>
+
+<input
+value="Ativo"
+readonly
+>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Resumo
+</h3>
+
+</div>
+
+<div
+id="profileStats"
+class="activity"
+>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+CONFIG
+========================================================== -->
+
+<section
+id="config"
+class="section"
+>
+
+<div class="page-head">
+
+<div>
+
+<h1>
+Configurações
+</h1>
+
+<p>
+Preferências do sistema.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="grid-2">
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Aparência
+</h3>
+
+</div>
+
+<label class="remember">
+
+<input
+type="checkbox"
+id="darkMode"
+onchange="setDark(this.checked)"
+>
+
+Modo escuro
+
+</label>
+
+
+<label class="remember">
+
+<input
+type="checkbox"
+id="compactMode"
+onchange="setCompact(this.checked)"
+>
+
+Modo compacto
+
+</label>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Dados
+</h3>
+
+</div>
+
+<div class="notice warning">
+
+Todos os dados são fictícios.
+
+Não utilize informações reais
+de pacientes neste projeto.
+
+</div>
+
+<br>
+
+<button
+class="danger-btn"
+onclick="resetDemo()"
+>
+Restaurar dados
+</button>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="card">
+
+<div class="card-head">
+
+<h3>
+Usuários de demonstração
+</h3>
+
+</div>
+
+<div class="table-wrap">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>
+Nome
+</th>
+
+<th>
+CPF
+</th>
+
+<th>
+Senha
+</th>
+
+<th>
+Perfil
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="usersTable"
+>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+class="modal-backdrop"
+id="modalBackdrop"
+onclick="backdropClose(event)"
+>
+
+<div
+class="modal"
+id="modalBox"
+>
+</div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+class="toast-wrap"
+id="toastWrap"
+>
+</div>
+
+
+<script>
+
+/* ============================================================
+TACQV 2.0
+DADOS FICTÍCIOS
+============================================================ */
+
+
+/* ================= USUARIOS ================= */
+
+const users=[
+
+{
+cpf:"11111111111",
+senha:"123456",
+nome:"Lucas Almeida",
+codigo:"TACQV001",
+perfil:"Paciente",
+nasc:"15/08/2009"
+},
+
+{
+cpf:"22222222222",
+senha:"123457",
+nome:"Gabriel Santos",
+codigo:"TACQV002",
+perfil:"Paciente",
+nasc:"21/03/2008"
+},
+
+{
+cpf:"33333333333",
+senha:"123458",
+nome:"João Oliveira",
+codigo:"TACQV003",
+perfil:"Paciente",
+nasc:"10/11/2009"
+},
+
+{
+cpf:"44444444444",
+senha:"123459",
+nome:"Pedro Henrique",
+codigo:"TACQV004",
+perfil:"Paciente",
+nasc:"05/02/2008"
+},
+
+{
+cpf:"55555555555",
+senha:"123460",
+nome:"Matheus Costa",
+codigo:"TACQV005",
+perfil:"Paciente",
+nasc:"18/07/2009"
+},
+
+{
+cpf:"66666666666",
+senha:"123461",
+nome:"Rafael Martins",
+codigo:"TACQV006",
+perfil:"Paciente",
+nasc:"29/01/2008"
+},
+
+{
+cpf:"77777777777",
+senha:"123462",
+nome:"Ana Clara Souza",
+codigo:"TACQV007",
+perfil:"Paciente",
+nasc:"13/06/2009"
+},
+
+{
+cpf:"88888888888",
+senha:"123463",
+nome:"Mariana Alves",
+codigo:"TACQV008",
+perfil:"Paciente",
+nasc:"22/09/2008"
+},
+
+{
+cpf:"99999999999",
+senha:"123464",
+nome:"Beatriz Lima",
+codigo:"TACQV009",
+perfil:"Paciente",
+nasc:"04/12/2009"
+},
+
+{
+cpf:"00000000000",
+senha:"123465",
+nome:"Júlia Ferreira",
+codigo:"TACQV010",
+perfil:"Paciente",
+nasc:"30/05/2008"
+}
+
+];
+
+
+/* ================= MEDICOS ================= */
+
+const doctors=[
+
+{
+id:"D001",
+nome:"Dr. Carlos Mendes",
+especialidade:"Cardiologia",
+crm:"CRM-TQ1001",
+status:"Disponível",
+sala:"Sala 101"
+},
+
+{
+id:"D002",
+nome:"Dra. Ana Souza",
+especialidade:"Clínica Geral",
+crm:"CRM-TQ1002",
+status:"Disponível",
+sala:"Sala 102"
+},
+
+{
+id:"D003",
+nome:"Dr. Rafael Oliveira",
+especialidade:"Ortopedia",
+crm:"CRM-TQ1003",
+status:"Em atendimento",
+sala:"Sala 103"
+},
+
+{
+id:"D004",
+nome:"Dra. Mariana Costa",
+especialidade:"Dermatologia",
+crm:"CRM-TQ1004",
+status:"Disponível",
+sala:"Sala 104"
+},
+
+{
+id:"D005",
+nome:"Dr. Felipe Santos",
+especialidade:"Neurologia",
+crm:"CRM-TQ1005",
+status:"Disponível",
+sala:"Sala 105"
+},
+
+{
+id:"D006",
+nome:"Dra. Juliana Lima",
+especialidade:"Pediatria",
+crm:"CRM-TQ1006",
+status:"Disponível",
+sala:"Sala 106"
+},
+
+{
+id:"D007",
+nome:"Dr. Eduardo Martins",
+especialidade:"Oftalmologia",
+crm:"CRM-TQ1007",
+status:"Disponível",
+sala:"Sala 107"
+},
+
+{
+id:"D008",
+nome:"Dra. Camila Ferreira",
+especialidade:"Ginecologia",
+crm:"CRM-TQ1008",
+status:"Em atendimento",
+sala:"Sala 108"
+},
+
+{
+id:"D009",
+nome:"Dr. Bruno Almeida",
+especialidade:"Urologia",
+crm:"CRM-TQ1009",
+status:"Disponível",
+sala:"Sala 109"
+},
+
+{
+id:"D010",
+nome:"Dra. Fernanda Rocha",
+especialidade:"Endocrinologia",
+crm:"CRM-TQ1010",
+status:"Disponível",
+sala:"Sala 110"
+}
+
+];
+
+
+/* ================= UNIDADES ================= */
+
+const units=[
+
+{
+id:"U001",
+nome:"TACQV Centro",
+endereco:"Av. Saúde, 100 - Centro",
+telefone:"(37) 3000-1001",
+horario:"07:00 às 18:00"
+},
+
+{
+id:"U002",
+nome:"TACQV Norte",
+endereco:"Rua Bem-Estar, 220 - Norte",
+telefone:"(37) 3000-1002",
+horario:"07:00 às 17:00"
+},
+
+{
+id:"U003",
+nome:"TACQV Sul",
+endereco:"Av. Qualidade, 350 - Sul",
+telefone:"(37) 3000-1003",
+horario:"08:00 às 18:00"
+},
+
+{
+id:"U004",
+nome:"TACQV Hospital",
+endereco:"Rua Cuidado, 500 - Hospital",
+telefone:"(37) 3000-1004",
+horario:"24 horas"
+}
+
+];
+
+
+/* ================= EXAMES ================= */
+
+const examsCatalog=[
+
+"Hemograma completo",
+"Glicemia",
+"Colesterol",
+"Exame de urina",
+"Ultrassonografia",
+"Raio-X",
+"Tomografia",
+"Ressonância magnética",
+"Eletrocardiograma",
+"TSH",
+"Vitamina D",
+"Creatinina",
+"Ecocardiograma"
+
+];
+
+
+const times=[
+"08:00",
+"09:00",
+"10:00",
+"11:00",
+"13:00",
+"14:00",
+"15:00",
+"16:00"
+];
+
+
+let currentUser=null;
+
+
+/* ================= FUNCOES ================= */
+
+function id(){
+
+    return "TQ"+
+    Date.now().toString(36)+
+    Math.random().toString(36).slice(2,6);
+
+}
+
+
+function today(){
+
+    const d=new Date();
+
+    return d.toISOString().split("T")[0];
+
+}
+
+
+function formatDate(date){
+
+    if(!date)return "—";
+
+    const p=date.split("-");
+
+    return `${p[2]}/${p[1]}/${p[0]}`;
+
+}
+
+
+function initials(name){
+
+    return name
+    .split(" ")
+    .slice(0,2)
+    .map(x=>x[0])
+    .join("")
+    .toUpperCase();
+
+}
+
+
+function getDoctor(id){
+
+    return doctors.find(
+        d=>d.id===id
+    );
+
+}
+
+
+function getPatient(id){
+
+    return state.patients.find(
+        p=>p.id===id
+    );
+
+}
+
+
+function getUnit(id){
+
+    return units.find(
+        u=>u.id===id
+    );
+
+}
+
+
+/* ================= BANCO LOCAL ================= */
+
+function createInitialState(){
+
+    return {
+
+        appointments:[
+
+            {
+                id:id(),
+                date:"2026-09-25",
+                time:"09:00",
+                patient:"TACQV001",
+                doctor:"D001",
+                unit:"U001",
+                status:"Confirmada",
+                notes:"Consulta de acompanhamento."
+            },
+
+            {
+                id:id(),
+                date:today(),
+                time:"10:00",
+                patient:"TACQV001",
+                doctor:"D002",
+                unit:"U001",
+                status:"Confirmada",
+                notes:"Avaliação clínica."
+            },
+
+            {
+                id:id(),
+                date:today(),
+                time:"14:00",
+                patient:"TACQV002",
+                doctor:"D003",
+                unit:"U002",
+                status:"Pendente",
+                notes:"Avaliação ortopédica."
+            }
+
+        ],
+
+        exams:[
+
+            {
+                id:id(),
+                date:today(),
+                exam:"Hemograma completo",
+                patient:"TACQV001",
+                unit:"U001",
+                status:"Agendado"
+            },
+
+            {
+                id:id(),
+                date:today(),
+                exam:"Glicemia",
+                patient:"TACQV002",
+                unit:"U002",
+                status:"Agendado"
+            },
+
+            {
+                id:id(),
+                date:"2026-09-30",
+                exam:"Eletrocardiograma",
+                patient:"TACQV003",
+                unit:"U004",
+                status:"Realizado"
+            }
+
+        ],
+
+        patients:[
+
+            ...users.map(
+                u=>({
+                    id:u.codigo,
+                    nome:u.nome,
+                    cpf:u.cpf,
+                    nasc:u.nasc,
+                    status:"Ativo"
+                })
+            )
+
+        ],
+
+        notifications:[
+
+            {
+                id:id(),
+                title:"Bem-vindo ao TACQV 2.0",
+                text:"Sistema carregado com sucesso.",
+                time:"Agora",
+                read:false
+            },
+
+            {
+                id:id(),
+                title:"Agenda atualizada",
+                text:"Existem horários disponíveis.",
+                time:"Hoje",
+                read:false
+            }
+
+        ],
+
+        history:[],
+
+        settings:{
+            dark:false,
+            compact:false
+        }
+
+    };
+
+}
+
+
+let state;
+
+try{
+
+    state=
+    JSON.parse(
+        localStorage.getItem("TACQV_DATABASE")
+    );
+
+}catch(e){
+
+    state=null;
+
+}
+
+
+if(!state){
+
+    state=createInitialState();
+
+    localStorage.setItem(
+        "TACQV_DATABASE",
+        JSON.stringify(state)
+    );
+
+}
+
+
+function save(){
+
+    localStorage.setItem(
+        "TACQV_DATABASE",
+        JSON.stringify(state)
+    );
+
+}
+
+
+/* ================= LOGIN ================= */
+
+function login(){
+
+    const cpf=
+    document
+    .getElementById("loginCpf")
+    .value;
+
+    const senha=
+    document
+    .getElementById("loginSenha")
+    .value;
+
+
+    const user=
+    users.find(
+        u=>
+        u.cpf===cpf &&
+        u.senha===senha
+    );
+
+
+    if(!user){
+
+        document
+        .getElementById("loginError")
+        .textContent=
+        "CPF ou senha inválidos.";
+
+        return;
+
+    }
+
+
+    currentUser=user;
+
+
+    document
+    .getElementById("loginScreen")
+    .style.display="none";
+
+
+    document
+    .getElementById("app")
+    .style.display="block";
+
+
+    document
+    .getElementById("sideName")
+    .textContent=user.nome;
+
+
+    document
+    .getElementById("sideRole")
+    .textContent=user.perfil;
+
+
+    document
+    .getElementById("sideAvatar")
+    .textContent=
+    initials(user.nome);
+
+
+    document
+    .getElementById("welcomeName")
+    .textContent=
+    user.nome.split(" ")[0];
+
+
+    populate();
+
+    showSection("dashboard");
+
+    toast(
+        "Login realizado com sucesso!",
+        "success"
+    );
+
+}
+
+
+function logout(){
+
+    if(
+        !confirm(
+            "Deseja realmente sair?"
+        )
+    )return;
+
+
+    currentUser=null;
+
+    document
+    .getElementById("app")
+    .style.display="none";
+
+
+    document
+    .getElementById("loginScreen")
+    .style.display="grid";
+
+
+    document
+    .getElementById("loginSenha")
+    .value="";
+
+}
+
+
+function togglePassword(){
+
+    const input=
+    document.getElementById(
+        "loginSenha"
+    );
+
+    input.type=
+    input.type==="password"
+    ?"text"
+    :"password";
+
+}
+
+
+/* ================= NAVEGACAO ================= */
+
+function showSection(id){
+
+    document
+    .querySelectorAll(".section")
+    .forEach(
+        s=>s.classList.remove("active")
+    );
+
+
+    const section=
+    document.getElementById(id);
+
+
+    if(section)
+        section.classList.add("active");
+
+
+    document
+    .querySelectorAll(
+        ".nav button[data-section]"
+    )
+    .forEach(
+        b=>
+        b.classList.toggle(
+            "active",
+            b.dataset.section===id
+        )
+    );
+
+
+    renderSection(id);
+
+}
+
+
+function renderSection(id){
+
+    if(id==="dashboard")
+        renderDashboard();
+
+    if(id==="agenda")
+        renderAgenda();
+
+    if(id==="consultas")
+        renderConsultas();
+
+    if(id==="exames")
+        renderExames();
+
+    if(id==="medicos")
+        renderDoctors();
+
+    if(id==="pacientes")
+        renderPatients();
+
+    if(id==="prontuarios")
+        renderRecords();
+
+    if(id==="historico")
+        renderHistory();
+
+    if(id==="notificacoes")
+        renderNotifications();
+
+    if(id==="relatorios")
+        renderReports();
+
+    if(id==="unidades")
+        renderUnits();
+
+    if(id==="perfil")
+        renderProfile();
+
+    if(id==="config")
+        renderConfig();
+
+}
+
+
+/* ================= POPULATE ================= */
+
+function populate(){
+
+    document
+    .getElementById("agendaDate")
+    .value=today();
+
+
+    const doctorSelect=
+    document.getElementById(
+        "agendaDoctor"
+    );
+
+
+    doctorSelect.innerHTML=
+    `<option value="">
+    Todos os médicos
+    </option>`+
+    doctors.map(
+        d=>
+        `<option value="${d.id}">
+        ${d.nome} - ${d.especialidade}
+        </option>`
+    ).join("");
+
+
+    const unitSelect=
+    document.getElementById(
+        "agendaUnit"
+    );
+
+
+    unitSelect.innerHTML=
+    `<option value="">
+    Todas as unidades
+    </option>`+
+    units.map(
+        u=>
+        `<option value="${u.id}">
+        ${u.nome}
+        </option>`
+    ).join("");
+
+
+    const specialty=
+    document.getElementById(
+        "doctorSpecialty"
+    );
+
+
+    specialty.innerHTML=
+    `<option value="">
+    Todas
+    </option>`+
+    [
+        ...new Set(
+            doctors.map(
+                d=>d.especialidade
+            )
+        )
+    ].map(
+        x=>
+        `<option>${x}</option>`
+    ).join("");
+
+
+    renderUsers();
+
+    renderDashboard();
+
+    renderDoctors();
+
+    renderPatients();
+
+    renderUnits();
+
+    updateBadge();
+
+}
+
+
+/* ================= DASHBOARD ================= */
+
+function renderDashboard(){
+
+    document
+    .getElementById("kpiToday")
+    .textContent=
+    state.appointments
+    .filter(
+        a=>
+        a.date===today() &&
+        a.status!=="Cancelada"
+    )
+    .length;
+
+
+    document
+    .getElementById("kpiExams")
+    .textContent=
+    state.exams
+    .filter(
+        e=>e.status!=="Cancelado"
+    )
+    .length;
+
+
+    document
+    .getElementById("kpiPatients")
+    .textContent=
+    state.patients.length;
+
+
+    document
+    .getElementById("kpiDoctors")
+    .textContent=
+    doctors.length;
+
+
+    document
+    .getElementById("chartTotal")
+    .textContent=
+    state.appointments.length+
+    " registros";
+
+
+    renderChart();
+
+
+    const next=
+    state.appointments
+    .filter(
+        a=>
+        a.date>=today() &&
+        a.status!=="Cancelada"
+    )
+    .sort(
+        (a,b)=>
+        (a.date+a.time)
+        .localeCompare(
+            b.date+b.time
+        )
+    )
+    .slice(0,5);
+
+
+    const box=
+    document.getElementById(
+        "nextAppointments"
+    );
+
+
+    if(!next.length){
+
+        box.innerHTML=
+        `<div class="notice">
+        Nenhum próximo compromisso.
+        </div>`;
+
+        return;
+
+    }
+
+
+    box.innerHTML=
+    next.map(
+        a=>{
+
+            const doctor=
+            getDoctor(a.doctor);
+
+            const patient=
+            getPatient(a.patient);
+
+            return `
+
+            <div class="activity-item">
+
+            <div class="activity-dot"></div>
+
+            <div>
+
+            <strong>
+            ${formatDate(a.date)}
+            às
+            ${a.time}
+            </strong>
+
+            <p>
+            ${doctor.nome}
+            -
+            ${patient.nome}
+            </p>
+
+            </div>
+
+            </div>
+
+            `;
+
+        }
+    ).join("");
+
+}
+
+
+/* ================= CHART ================= */
+
+function renderChart(){
+
+    const chart=
+    document.getElementById(
+        "consultChart"
+    );
+
+
+    let values=[];
+
+
+    for(let i=6;i>=0;i--){
+
+        const date=
+        new Date();
+
+        date.setDate(
+            date.getDate()-i
+        );
+
+
+        const iso=
+        date
+        .toISOString()
+        .split("T")[0];
+
+
+        values.push({
+
+            label:
+            date.toLocaleDateString(
+                "pt-BR",
+                {
+                    weekday:"short"
+                }
+            ),
+
+            value:
+            state.appointments
+            .filter(
+                a=>a.date===iso
+            )
+            .length
+
+        });
+
+    }
+
+
+    const max=
+    Math.max(
+        1,
+        ...values.map(
+            x=>x.value
+        )
+    );
+
+
+    chart.innerHTML=
+    values.map(
+        x=>`
+
+        <div class="bar-col">
+
+        <span>
+        ${x.value}
+        </span>
+
+        <div
+        class="bar"
+        style="
+        height:${Math.max(
+            8,
+            x.value/max*150
+        )}px
+        "
+        ></div>
+
+        <small>
+        ${x.label}
+        </small>
+
+        </div>
+
+        `
+    ).join("");
+
+}
+
+
+/* ================= AGENDA ================= */
+
+function renderAgenda(){
+
+    const date=
+    document.getElementById(
+        "agendaDate"
+    ).value;
+
+
+    const doctor=
+    document.getElementById(
+        "agendaDoctor"
+    ).value;
+
+
+    const unit=
+    document.getElementById(
+        "agendaUnit"
+    ).value;
+
+
+    document
+    .getElementById(
+        "agendaDateTitle"
+    )
+    .textContent=
+    formatDate(date);
+
+
+    const slots=
+    document.getElementById(
+        "slots"
+    );
+
+
+    slots.innerHTML=
+    times.map(
+        time=>{
+
+            const appointment=
+            state.appointments.find(
+                a=>
+                a.date===date &&
+                a.time===time &&
+                a.status!=="Cancelada" &&
+                (!doctor||a.doctor===doctor) &&
+                (!unit||a.unit===unit)
+            );
+
+
+            if(appointment){
+
+                const d=
+                getDoctor(
+                    appointment.doctor
+                );
+
+
+                return `
+
+                <button
+                class="slot occupied"
+                disabled
+                >
+
+                <strong>
+                ${time}
+                </strong>
+
+                <small>
+                ${d.nome}
+                </small>
+
+                <span
+                class="status cancelled"
+                >
+                Ocupado
+                </span>
+
+                </button>
+
+                `;
+
+            }
+
+
+            return `
+
+            <button
+            class="slot available"
+            onclick="
+            quickBook(
+                '${date}',
+                '${time}'
+            )
+            "
+            >
+
+            <strong>
+            ${time}
+            </strong>
+
+            <small>
+            Horário livre
+            </small>
+
+            <span
+            class="status confirmed"
+            >
+            Agendar
+            </span>
+
+            </button>
+
+            `;
+
+        }
+    ).join("");
+
+}
+
+
+/* ================= CONSULTA ================= */
+
+function openAppointmentModal(
+    data={}
+){
+
+    openModal(`
+
+    <div class="modal-head">
+
+    <h3>
+    Nova consulta
+    </h3>
+
+    <button
+    class="close"
+    onclick="closeModal()"
+    >
+    ×
+    </button>
+
+    </div>
+
+
+    <form
+    onsubmit="saveAppointment(event)"
+    >
+
+    <div class="form-grid">
+
+
+    <div class="field">
+
+    <label>
+    Paciente
+    </label>
+
+    <select
+    id="mPatient"
+    required
+    >
+
+    ${state.patients.map(
+        p=>
+        `<option
+        value="${p.id}"
+        ${p.id===currentUser.codigo
+        ?"selected":""}
+        >
+        ${p.nome}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Médico
+    </label>
+
+    <select
+    id="mDoctor"
+    required
+    >
+
+    ${doctors.map(
+        d=>
+        `<option value="${d.id}">
+        ${d.nome} -
+        ${d.especialidade}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Data
+    </label>
+
+    <input
+    type="date"
+    id="mDate"
+    value="${data.date||today()}"
+    required
+    >
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Horário
+    </label>
+
+    <select
+    id="mTime"
+    required
+    >
+
+    ${times.map(
+        t=>
+        `<option
+        ${data.time===t
+        ?"selected":""}
+        >
+        ${t}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Unidade
+    </label>
+
+    <select
+    id="mUnit"
+    required
+    >
+
+    ${units.map(
+        u=>
+        `<option value="${u.id}">
+        ${u.nome}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Status
+    </label>
+
+    <select id="mStatus">
+
+    <option>
+    Confirmada
+    </option>
+
+    <option>
+    Pendente
+    </option>
+
+    </select>
+
+    </div>
+
+
+    <div class="field full">
+
+    <label>
+    Observações
+    </label>
+
+    <textarea
+    id="mNotes"
+    rows="3"
+    ></textarea>
+
+    </div>
+
+    </div>
+
+
+    <div class="form-actions">
+
+    <button
+    type="button"
+    class="secondary-btn"
+    onclick="closeModal()"
+    >
+    Cancelar
+    </button>
+
+    <button
+    class="primary-btn"
+    >
+    Salvar consulta
+    </button>
+
+    </div>
+
+    </form>
+
+    `);
+
+}
+
+
+function quickBook(
+    date,
+    time
+){
+
+    openAppointmentModal({
+        date,
+        time
+    });
+
+}
+
+
+function saveAppointment(e){
+
+    e.preventDefault();
+
+
+    const appointment={
+
+        id:id(),
+
+        date:
+        document
+        .getElementById("mDate")
+        .value,
+
+        time:
+        document
+        .getElementById("mTime")
+        .value,
+
+        patient:
+        document
+        .getElementById("mPatient")
+        .value,
+
+        doctor:
+        document
+        .getElementById("mDoctor")
+        .value,
+
+        unit:
+        document
+        .getElementById("mUnit")
+        .value,
+
+        status:
+        document
+        .getElementById("mStatus")
+        .value,
+
+        notes:
+        document
+        .getElementById("mNotes")
+        .value
+
+    };
+
+
+    const occupied=
+    state.appointments.some(
+        a=>
+        a.date===appointment.date &&
+        a.time===appointment.time &&
+        a.doctor===appointment.doctor &&
+        a.status!=="Cancelada"
+    );
+
+
+    if(occupied){
+
+        toast(
+            "Esse médico já está ocupado nesse horário.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    state.appointments.push(
+        appointment
+    );
+
+
+    save();
+
+
+    addNotification(
+        "Nova consulta",
+        `Consulta marcada para ${formatDate(
+            appointment.date
+        )}.`
+    );
+
+
+    closeModal();
+
+    refresh();
+
+    toast(
+        "Consulta agendada com sucesso!",
+        "success"
+    );
+
+}
+
+
+/* ================= LISTA CONSULTAS ================= */
+
+function renderConsultas(){
+
+    const search=
+    (
+        document
+        .getElementById("consultSearch")
+        ?.value||
+        ""
+    ).toLowerCase();
+
+
+    const status=
+    document
+    .getElementById("consultStatus")
+    ?.value||"";
+
+
+    let list=
+    [...state.appointments];
+
+
+    list=
+    list.filter(
+        a=>{
+
+            const patient=
+            getPatient(a.patient);
+
+            const doctor=
+            getDoctor(a.doctor);
+
+
+            const text=
+            `${patient?.nome}
+            ${doctor?.nome}
+            ${doctor?.especialidade}`
+            .toLowerCase();
+
+
+            return
+            (!search||
+            text.includes(search))
+            &&
+            (!status||
+            a.status===status);
+
+        }
+    );
+
+
+    document
+    .getElementById(
+        "consultTable"
+    )
+    .innerHTML=
+    list.map(
+        a=>{
+
+            const p=
+            getPatient(a.patient);
+
+            const d=
+            getDoctor(a.doctor);
+
+
+            const cls=
+            a.status==="Confirmada"
+            ?"confirmed":
+            a.status==="Pendente"
+            ?"pending":
+            a.status==="Concluída"
+            ?"done":
+            "cancelled";
+
+
+            return `
+
+            <tr>
+
+            <td>
+            ${formatDate(a.date)}
+            </td>
+
+            <td>
+            ${a.time}
+            </td>
+
+            <td>
+            ${p?.nome}
+            </td>
+
+            <td>
+            ${d?.nome}
+            </td>
+
+            <td>
+            ${d?.especialidade}
+            </td>
+
+            <td>
+
+            <span
+            class="status ${cls}"
+            >
+            ${a.status}
+            </span>
+
+            </td>
+
+            <td>
+
+            <button
+            class="secondary-btn"
+            onclick="
+            editAppointment('${a.id}')
+            "
+            >
+            Editar
+            </button>
+
+            <button
+            class="danger-btn"
+            onclick="
+            cancelAppointment('${a.id}')
+            "
+            >
+            Cancelar
+            </button>
+
+            </td>
+
+            </tr>
+
+            `;
+
+        }
+    ).join("");
+
+}
+
+
+function editAppointment(id){
+
+    const a=
+    state.appointments.find(
+        x=>x.id===id
+    );
+
+
+    if(!a)return;
+
+
+    openModal(`
+
+    <div class="modal-head">
+
+    <h3>
+    Editar consulta
+    </h3>
+
+    <button
+    class="close"
+    onclick="closeModal()"
+    >
+    ×
+    </button>
+
+    </div>
+
+
+    <form
+    onsubmit="
+    updateAppointment(
+        event,
+        '${id}'
+    )
+    "
+    >
+
+    <div class="form-grid">
+
+
+    <div class="field">
+
+    <label>
+    Data
+    </label>
+
+    <input
+    type="date"
+    id="editDate"
+    value="${a.date}"
+    >
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Horário
+    </label>
+
+    <select id="editTime">
+
+    ${times.map(
+        t=>
+        `<option
+        ${t===a.time
+        ?"selected":""}
+        >
+        ${t}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Médico
+    </label>
+
+    <select id="editDoctor">
+
+    ${doctors.map(
+        d=>
+        `<option
+        value="${d.id}"
+        ${d.id===a.doctor
+        ?"selected":""}
+        >
+        ${d.nome}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Status
+    </label>
+
+    <select id="editStatus">
+
+    ${[
+        "Confirmada",
+        "Pendente",
+        "Concluída",
+        "Cancelada"
+    ].map(
+        s=>
+        `<option
+        ${s===a.status
+        ?"selected":""}
+        >
+        ${s}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+    </div>
+
+
+    <div class="form-actions">
+
+    <button
+    type="button"
+    class="secondary-btn"
+    onclick="closeModal()"
+    >
+    Cancelar
+    </button>
+
+    <button
+    class="primary-btn"
+    >
+    Salvar
+    </button>
+
+    </div>
+
+    </form>
+
+    `);
+
+}
+
+
+function updateAppointment(
+    e,
+    id
+){
+
+    e.preventDefault();
+
+
+    const a=
+    state.appointments.find(
+        x=>x.id===id
+    );
+
+
+    if(!a)return;
+
+
+    a.date=
+    document
+    .getElementById("editDate")
+    .value;
+
+
+    a.time=
+    document
+    .getElementById("editTime")
+    .value;
+
+
+    a.doctor=
+    document
+    .getElementById("editDoctor")
+    .value;
+
+
+    a.status=
+    document
+    .getElementById("editStatus")
+    .value;
+
+
+    save();
+
+    closeModal();
+
+    refresh();
+
+    toast(
+        "Consulta atualizada!",
+        "success"
+    );
+
+}
+
+
+function cancelAppointment(id){
+
+    if(
+        !confirm(
+            "Cancelar esta consulta?"
+        )
+    )return;
+
+
+    const a=
+    state.appointments.find(
+        x=>x.id===id
+    );
+
+
+    if(!a)return;
+
+
+    a.status="Cancelada";
+
+
+    save();
+
+    refresh();
+
+    toast(
+        "Consulta cancelada."
+    );
+
+}
+
+
+/* ================= EXAMES ================= */
+
+function openExamModal(){
+
+    openModal(`
+
+    <div class="modal-head">
+
+    <h3>
+    Agendar exame
+    </h3>
+
+    <button
+    class="close"
+    onclick="closeModal()"
+    >
+    ×
+    </button>
+
+    </div>
+
+
+    <form
+    onsubmit="saveExam(event)"
+    >
+
+    <div class="form-grid">
+
+
+    <div class="field full">
+
+    <label>
+    Paciente
+    </label>
+
+    <select id="examPatient">
+
+    ${state.patients.map(
+        p=>
+        `<option value="${p.id}">
+        ${p.nome}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Exame
+    </label>
+
+    <select id="examType">
+
+    ${examsCatalog.map(
+        x=>
+        `<option>
+        ${x}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Data
+    </label>
+
+    <input
+    type="date"
+    id="examDate"
+    value="${today()}"
+    >
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Unidade
+    </label>
+
+    <select id="examUnit">
+
+    ${units.map(
+        u=>
+        `<option value="${u.id}">
+        ${u.nome}
+        </option>`
+    ).join("")}
+
+    </select>
+
+    </div>
+
+
+    </div>
+
+
+    <div class="form-actions">
+
+    <button
+    type="button"
+    class="secondary-btn"
+    onclick="closeModal()"
+    >
+    Cancelar
+    </button>
+
+    <button
+    class="primary-btn"
+    >
+    Agendar exame
+    </button>
+
+    </div>
+
+    </form>
+
+    `);
+
+}
+
+
+function saveExam(e){
+
+    e.preventDefault();
+
+
+    const exam={
+
+        id:id(),
+
+        patient:
+        document
+        .getElementById("examPatient")
+        .value,
+
+        exam:
+        document
+        .getElementById("examType")
+        .value,
+
+        date:
+        document
+        .getElementById("examDate")
+        .value,
+
+        unit:
+        document
+        .getElementById("examUnit")
+        .value,
+
+        status:"Agendado"
+
+    };
+
+
+    state.exams.push(
+        exam
+    );
+
+
+    save();
+
+    closeModal();
+
+    refresh();
+
+    toast(
+        "Exame agendado com sucesso!",
+        "success"
+    );
+
+}
+
+
+function renderExames(){
+
+    const search=
+    (
+        document
+        .getElementById("examSearch")
+        ?.value||
+        ""
+    ).toLowerCase();
+
+
+    const status=
+    document
+    .getElementById("examStatus")
+    ?.value||"";
+
+
+    let list=
+    state.exams.filter(
+        e=>
+        (
+            !search||
+            e.exam
+            .toLowerCase()
+            .includes(search)
+        )
+        &&
+        (
+            !status||
+            e.status===status
+        )
+    );
+
+
+    document
+    .getElementById(
+        "examTable"
+    )
+    .innerHTML=
+    list.map(
+        e=>{
+
+            const p=
+            getPatient(e.patient);
+
+            const u=
+            getUnit(e.unit);
+
+
+            const cls=
+            e.status==="Agendado"
+            ?"confirmed":
+            e.status==="Realizado"
+            ?"done":
+            "cancelled";
+
+
+            return `
+
+            <tr>
+
+            <td>
+            ${formatDate(e.date)}
+            </td>
+
+            <td>
+            ${e.exam}
+            </td>
+
+            <td>
+            ${p?.nome}
+            </td>
+
+            <td>
+            ${u?.nome}
+            </td>
+
+            <td>
+
+            <span
+            class="status ${cls}"
+            >
+            ${e.status}
+            </span>
+
+            </td>
+
+            <td>
+
+            <button
+            class="secondary-btn"
+            onclick="
+            viewExam('${e.id}')
+            "
+            >
+            Ver
+            </button>
+
+            <button
+            class="danger-btn"
+            onclick="
+            cancelExam('${e.id}')
+            "
+            >
+            Cancelar
+            </button>
+
+            </td>
+
+            </tr>
+
+            `;
+
+        }
+    ).join("");
+
+}
+
+
+function viewExam(id){
+
+    const e=
+    state.exams.find(
+        x=>x.id===id
+    );
+
+
+    if(!e)return;
+
+
+    const p=
+    getPatient(e.patient);
+
+    const u=
+    getUnit(e.unit);
+
+
+    openModal(`
+
+    <div class="modal-head">
+
+    <h3>
+    Detalhes do exame
+    </h3>
+
+    <button
+    class="close"
+    onclick="closeModal()"
+    >
+    ×
+    </button>
+
+    </div>
+
+
+    <div class="notice">
+
+    <b>
+    ${e.exam}
+    </b>
+
+    <br><br>
+
+    Paciente:
+    ${p.nome}
+
+    <br>
+
+    Data:
+    ${formatDate(e.date)}
+
+    <br>
+
+    Unidade:
+    ${u.nome}
+
+    <br>
+
+    Status:
+    ${e.status}
+
+    </div>
+
+    `);
+
+}
+
+
+function cancelExam(id){
+
+    if(
+        !confirm(
+            "Cancelar este exame?"
+        )
+    )return;
+
+
+    const e=
+    state.exams.find(
+        x=>x.id===id
+    );
+
+
+    if(!e)return;
+
+
+    e.status="Cancelado";
+
+
+    save();
+
+    refresh();
+
+    toast(
+        "Exame cancelado."
+    );
+
+}
+
+
+/* ================= MEDICOS ================= */
+
+function renderDoctors(){
+
+    const search=
+    (
+        document
+        .getElementById("doctorSearch")
+        ?.value||
+        ""
+    ).toLowerCase();
+
+
+    const specialty=
+    document
+    .getElementById("doctorSpecialty")
+    ?.value||"";
+
+
+    const list=
+    doctors.filter(
+        d=>
+        (
+            !search||
+            `${d.nome}
+            ${d.especialidade}`
+            .toLowerCase()
+            .includes(search)
+        )
+        &&
+        (
+            !specialty||
+            d.especialidade===specialty
+        )
+    );
+
+
+    document
+    .getElementById(
+        "doctorGrid"
+    )
+    .innerHTML=
+    list.map(
+        d=>`
+
+        <div class="doctor-card">
+
+        <div class="doctor-top">
+
+        <div class="avatar">
+        ${initials(d.nome)}
+        </div>
+
+        <div>
+
+        <h4>
+        ${d.nome}
+        </h4>
+
+        <p>
+        ${d.especialidade}
+        </p>
+
+        </div>
+
+        </div>
+
+
+        <div class="notice">
+
+        ${d.crm}
+
+        <br>
+
+        ${d.sala}
+
+        </div>
+
+
+        <div class="doctor-meta">
+
+        <span
+        class="status
+        ${d.status==="Disponível"
+        ?"confirmed"
+        :"pending"}"
+        >
+
+        ${d.status}
+
+        </span>
+
+        <button
+        class="ghost-btn"
+        onclick="
+        doctorInfo('${d.id}')
+        "
+        >
+        Detalhes
+        </button>
+
+        </div>
+
+        </div>
+
+        `
+    ).join("");
+
+}
+
+
+function doctorInfo(id){
+
+    const d=
+    getDoctor(id);
+
+
+    openModal(`
+
+    <div class="modal-head">
+
+    <h3>
+    ${d.nome}
+    </h3>
+
+    <button
+    class="close"
+    onclick="closeModal()"
+    >
+    ×
+    </button>
+
+    </div>
+
+
+    <div class="activity">
+
+    <div>
+
+    <b>
+    Especialidade
+    </b>
+
+    <p class="muted">
+    ${d.especialidade}
+    </p>
+
+    </div>
+
+
+    <div>
+
+    <b>
+    Registro
+    </b>
+
+    <p class="muted">
+    ${d.crm}
+    </p>
+
+    </div>
+
+
+    <div>
+
+    <b>
+    Sala
+    </b>
+
+    <p class="muted">
+    ${d.sala}
+    </p>
+
+    </div>
+
+    </div>
+
+    `);
+
+}
+
+
+/* ================= PACIENTES ================= */
+
+function renderPatients(){
+
+    const search=
+    (
+        document
+        .getElementById("patientSearch")
+        ?.value||
+        ""
+    ).toLowerCase();
+
+
+    const list=
+    state.patients.filter(
+        p=>
+        `${p.nome}
+        ${p.cpf}
+        ${p.id}`
+        .toLowerCase()
+        .includes(search)
+    );
+
+
+    document
+    .getElementById(
+        "patientTable"
+    )
+    .innerHTML=
+    list.map(
+        p=>`
+
+        <tr>
+
+        <td>
+        <b>
+        ${p.id}
+        </b>
+        </td>
+
+        <td>
+        ${p.nome}
+        </td>
+
+        <td>
+        ${p.cpf}
+        </td>
+
+        <td>
+        ${p.nasc}
+        </td>
+
+        <td>
+
+        <span
+        class="status confirmed"
+        >
+        ${p.status}
+        </span>
+
+        </td>
+
+        <td>
+
+        <button
+        class="secondary-btn"
+        onclick="
+        patientInfo('${p.id}')
+        "
+        >
+        Ver perfil
+        </button>
+
+        </td>
+
+        </tr>
+
+        `
+    ).join("");
+
+}
+
+
+function openPatientModal(){
+
+    openModal(`
+
+    <div class="modal-head">
+
+    <h3>
+    Novo paciente
+    </h3>
+
+    <button
+    class="close"
+    onclick="closeModal()"
+    >
+    ×
+    </button>
+
+    </div>
+
+
+    <form
+    onsubmit="savePatient(event)"
+    >
+
+    <div class="form-grid">
+
+
+    <div class="field">
+
+    <label>
+    Nome
+    </label>
+
+    <input
+    id="newPatientName"
+    required
+    >
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    CPF fictício
+    </label>
+
+    <input
+    id="newPatientCpf"
+    maxlength="11"
+    required
+    >
+
+    </div>
+
+
+    <div class="field">
+
+    <label>
+    Nascimento
+    </label>
+
+    <input
+    id="newPatientBirth"
+    type="date"
+    required
+    >
+
+    </div>
+
+    </div>
+
+
+    <div class="form-actions">
+
+    <button
+    type="button"
+    class="secondary-btn"
+    onclick="closeModal()"
+    >
+    Cancelar
+    </button>
+
+    <button
+    class="primary-btn"
+    >
+    Cadastrar
+    </button>
+
+    </div>
+
+    </form>
+
+    `);
+
+}
+
+
+function savePatient(e){
+
+    e.preventDefault();
+
+
+    const name=
+    document
+    .getElementById(
+        "newPatientName"
+    )
+    .value;
+
+
+    const cpf=
+    document
+    .getElementById(
+        "newPatientCpf"
+    )
+    .value;
+
+
+    const birth=
+    document
+    .getElementById(
+        "newPatientBirth"
+    )
+    .value;
+
+
+    const code=
+    "TACQV"+
+    String(
+        state.patients.length+1
+    ).padStart(3,"0");
+
+
+    state.patients.push({
+
+        id:code,
+
+        nome:name,
+
+        cpf:cpf,
+
+        nasc:formatDate(birth),
+
+        status:"Ativo"
+
+    });
+
+
+    save();
+
+    closeModal();
+
+    refresh();
+
+    toast(
+        "Paciente cadastrado!",
+        "success"
+    );
+
+}
+
+
+function patientInfo(id){
+
+    const p=
+    getPatient(id);
+
+
+    const appointments=
+    state.appointments
+    .filter(
+        a=>a.patient===id
+    )
+    .length;
+
+
+    const exams=
+    state.exams
+    .filter(
+        e=>e.patient===id
+    )
+    .length;
+
+
+    openModal(`
+
+    <div class="modal-head">
+
+    <h3>
+    ${p.nome}
+    </h3>
+
+    <button
+    class="close"
+    onclick="closeModal()"
+    >
+    ×
+    </button>
+
+    </div>
+
+
+    <div class="notice">
+
+    <b>
+    Código:
+    </b>
+    ${p.id}
+
+    <br>
+
+    <b>
+    CPF:
+    </b>
+    ${p.cpf}
+
+    <br>
+
+    <b>
+    Nascimento:
+    </b>
+    ${p.nasc}
+
+    <br>
+
+    <b>
+    Status:
+    </b>
+    ${p.status}
+
+    <br><br>
+
+    Consultas:
+    ${appointments}
+
+    <br>
+
+    Exames:
+    ${exams}
+
+    </div>
+
+    `);
+
+}
+
+
+/* ================= PRONTUARIO ================= */
+
+function renderRecords(){
+
+    const select=
+    document.getElementById(
+        "recordPatient"
+    );
+
+
+    select.innerHTML=
+    state.patients.map(
+        p=>
+        `<option value="${p.id}">
+        ${p.nome}
+        </option>`
+    ).join("");
+
+
+    select.value=
+    currentUser.codigo;
+
+
+    renderRecord();
+
+}
+
+
+function renderRecord(){
+
+    const id=
+    document
+    .getElementById(
+        "recordPatient"
+    )
+    .value;
+
+
+    const p=
+    getPatient(id);
+
+
+    if(!p)return;
+
+
+    const appointments=
+    state.appointments
+    .filter(
+        a=>a.patient===id
+    );
+
+
+    const exams=
+    state.exams
+    .filter(
+        e=>e.patient===id
+    );
+
+
+    document
+    .getElementById(
+        "recordSummary"
+    )
+    .innerHTML=`
+
+    <div class="notice">
+
+    <b>
+    ${p.nome}
+    </b>
+
+    <br><br>
+
+    Código:
+    ${p.id}
+
+    <br>
+
+    Nascimento:
+    ${p.nasc}
+
+    <br>
+
+    Alergias:
+    Nenhuma registrada
+
+    <br>
+
+    Observação:
+    Registro fictício acadêmico.
+
+    </div>
+
+    <br>
+
+    Consultas:
+    ${appointments.length}
+
+    <br>
+
+    Exames:
+    ${exams.length}
+
+    `;
+
+
+    const timeline=
+    document.getElementById(
+        "recordTimeline"
+    );
+
+
+    const events=[
+
+        ...appointments.map(
+            a=>({
+
+                date:a.date,
+
+                title:"Consulta",
+
+                text:
+                `${getDoctor(a.doctor).nome}
+                - ${a.status}`
+
+            })
+        ),
+
+        ...exams.map(
+            e=>({
+
+                date:e.date,
+
+                title:"Exame",
+
+                text:
+                `${e.exam}
+                - ${e.status}`
+
+            })
+        )
+
+    ].sort(
+        (a,b)=>
+        b.date.localeCompare(a.date)
+    );
+
+
+    timeline.innerHTML=
+    events.map(
+        e=>`
+
+        <div class="timeline-item">
+
+        <div class="timeline-time">
+        ${formatDate(e.date)}
+        </div>
+
+        <div class="timeline-line">
+        </div>
+
+        <div class="timeline-body">
+
+        <strong>
+        ${e.title}
+        </strong>
+
+        <p>
+        ${e.text}
+        </p>
+
+        </div>
+
+        </div>
+
+        `
+    ).join("");
+
+}
+
+
+/* ================= HISTORICO ================= */
+
+function addHistory(
+    title,
+    text
+){
+
+    state.history.push({
+
+        title,
+
+        text,
+
+        time:
+        new Date()
+        .toLocaleString(
+            "pt-BR"
+        )
+
+    });
+
+
+    save();
+
+}
+
+
+function renderHistory(){
+
+    const box=
+    document.getElementById(
+        "historyTimeline"
+    );
+
+
+    box.innerHTML=
+    state.history
+    .slice()
+    .reverse()
+    .map(
+        h=>`
+
+        <div class="timeline-item">
+
+        <div class="timeline-time">
+        ${h.time}
+        </div>
+
+        <div class="timeline-line">
+        </div>
+
+        <div class="timeline-body">
+
+        <strong>
+        ${h.title}
+        </strong>
+
+        <p>
+        ${h.text}
+        </p>
+
+        </div>
+
+        </div>
+
+        `
+    ).join("");
+
+}
+
+
+function clearHistory(){
+
+    if(
+        !confirm(
+            "Limpar histórico?"
+        )
+    )return;
+
+
+    state.history=[];
+
+    save();
+
+    renderHistory();
+
+}
+
+
+/* ================= NOTIFICACOES ================= */
+
+function addNotification(
+    title,
+    text
+){
+
+    state.notifications.unshift({
+
+        id:id(),
+
+        title,
+
+        text,
+
+        time:"Agora",
+
+        read:false
+
+    });
+
+
+    save();
+
+    updateBadge();
+
+}
+
+
+function renderNotifications(){
+
+    const box=
+    document.getElementById(
+        "notificationList"
+    );
+
+
+    box.innerHTML=
+    state.notifications.map(
+        n=>`
+
+        <div
+        class="activity-item"
+        style="
+        padding:14px;
+        border:1px solid var(--border);
+        border-radius:13px
+        "
+        >
+
+        <div class="activity-dot">
+        </div>
+
+        <div>
+
+        <strong>
+        ${n.title}
+        </strong>
+
+        <p>
+        ${n.text}
+        </p>
+
+        ${
+            !n.read
+            ?
+            `
+            <button
+            class="secondary-btn"
+            onclick="
+            readNotification(
+                '${n.id}'
+            )
+            "
+            >
+            Marcar lida
+            </button>
+            `
+            :
+            ""
+        }
+
+        </div>
+
+        </div>
+
+        `
+    ).join("");
+
+}
+
+
+function readNotification(id){
+
+    const n=
+    state.notifications.find(
+        x=>x.id===id
+    );
+
+
+    if(n)
+        n.read=true;
+
+
+    save();
+
+    renderNotifications();
+
+    updateBadge();
+
+}
+
+
+function markAllRead(){
+
+    state.notifications
+    .forEach(
+        n=>n.read=true
+    );
+
+
+    save();
+
+    renderNotifications();
+
+    updateBadge();
+
+}
+
+
+function updateBadge(){
+
+    const count=
+    state.notifications
+    .filter(
+        n=>!n.read
+    )
+    .length;
+
+
+    document
+    .getElementById(
+        "notificationBadge"
+    )
+    .textContent=
+    count;
+
+}
+
+
+/* ================= RELATORIOS ================= */
+
+function renderReports(){
+
+    document
+    .getElementById(
+        "reportConsultas"
+    )
+    .textContent=
+    state.appointments.length;
+
+
+    document
+    .getElementById(
+        "reportConfirmed"
+    )
+    .textContent=
+    state.appointments
+    .filter(
+        a=>a.status==="Confirmada"
+    )
+    .length;
+
+
+    document
+    .getElementById(
+        "reportExams"
+    )
+    .textContent=
+    state.exams.length;
+
+
+    document
+    .getElementById(
+        "reportPatients"
+    )
+    .textContent=
+    state.patients.length;
+
+
+    const counts={};
+
+
+    state.appointments
+    .forEach(
+        a=>{
+
+            const d=
+            getDoctor(a.doctor);
+
+            const specialty=
+            d.especialidade;
+
+
+            counts[specialty]=
+            (counts[specialty]||0)+1;
+
+        }
+    );
+
+
+    document
+    .getElementById(
+        "specialtyReport"
+    )
+    .innerHTML=
+    Object
+    .entries(counts)
+    .map(
+        ([name,value])=>
+        `
+
+        <div
+        style="
+        display:flex;
+        justify-content:space-between;
+        padding:12px 0;
+        border-bottom:1px solid var(--border)
+        "
+        >
+
+        <span>
+        ${name}
+        </span>
+
+        <b>
+        ${value}
+        </b>
+
+        </div>
+
+        `
+    ).join("");
+
+
+    const statuses={};
+
+
+    state.appointments
+    .forEach(
+        a=>
+        statuses[a.status]=
+        (statuses[a.status]||0)+1
+    );
+
+
+    document
+    .getElementById(
+        "statusReport"
+    )
+    .innerHTML=
+    Object
+    .entries(statuses)
+    .map(
+        ([name,value])=>
+        `
+
+        <div
+        style="
+        display:flex;
+        justify-content:space-between;
+        padding:12px 0;
+        border-bottom:1px solid var(--border)
+        "
+        >
+
+        <span>
+        ${name}
+        </span>
+
+        <b>
+        ${value}
+        </b>
+
+        </div>
+
+        `
+    ).join("");
+
+}
+
+
+/* ================= UNIDADES ================= */
+
+function renderUnits(){
+
+    document
+    .getElementById(
+        "unitGrid"
+    )
+    .innerHTML=
+    units.map(
+        u=>`
+
+        <div class="card">
+
+        <div class="card-head">
+
+        <h3>
+        ${u.nome}
+        </h3>
+
+        <span
+        class="status confirmed"
+        >
+        Ativa
+        </span>
+
+        </div>
+
+        <p
+        class="muted"
+        style="line-height:1.8"
+        >
+
+        ${u.endereco}
+
+        <br>
+
+        ${u.telefone}
+
+        <br>
+
+        ${u.horario}
+
+        </p>
+
+        <br>
+
+        <div class="notice">
+
+        Unidade fictícia
+        para demonstração.
+
+        </div>
+
+        </div>
+
+        `
+    ).join("");
+
+}
+
+
+/* ================= PERFIL ================= */
+
+function renderProfile(){
+
+    document
+    .getElementById(
+        "profileAvatar"
+    )
+    .textContent=
+    initials(
+        currentUser.nome
+    );
+
+
+    document
+    .getElementById(
+        "profileName"
+    )
+    .textContent=
+    currentUser.nome;
+
+
+    document
+    .getElementById(
+        "profileRole"
+    )
+    .textContent=
+    currentUser.perfil;
+
+
+    document
+    .getElementById(
+        "profileNameInput"
+    )
+    .value=
+    currentUser.nome;
+
+
+    document
+    .getElementById(
+        "profileCpf"
+    )
+    .value=
+    currentUser.cpf;
+
+
+    document
+    .getElementById(
+        "profileCode"
+    )
+    .value=
+    currentUser.codigo;
+
+
+    const appointments=
+    state.appointments
+    .filter(
+        a=>
+        a.patient===currentUser.codigo
+    ).length;
+
+
+    const exams=
+    state.exams
+    .filter(
+        e=>
+        e.patient===currentUser.codigo
+    ).length;
+
+
+    document
+    .getElementById(
+        "profileStats"
+    )
+    .innerHTML=`
+
+    <div class="activity-item">
+
+    <div class="activity-dot">
+    </div>
+
+    <div>
+
+    <strong>
+    ${appointments}
+    consulta(s)
+    </strong>
+
+    <p>
+    Registros associados.
+    </p>
+
+    </div>
+
+    </div>
+
+
+    <div class="activity-item">
+
+    <div class="activity-dot">
+    </div>
+
+    <div>
+
+    <strong>
+    ${exams}
+    exame(s)
+    </strong>
+
+    <p>
+    Registros associados.
+    </p>
+
+    </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* ================= CONFIG ================= */
+
+function renderConfig(){
+
+    document
+    .getElementById(
+        "darkMode"
+    )
+    .checked=
+    state.settings.dark;
+
+
+    document
+    .getElementById(
+        "compactMode"
+    )
+    .checked=
+    state.settings.compact;
+
+
+    renderUsers();
+
+}
+
+
+function renderUsers(){
+
+    document
+    .getElementById(
+        "usersTable"
+    )
+    .innerHTML=
+    users.map(
+        u=>`
+
+        <tr>
+
+        <td>
+        ${u.nome}
+        </td>
+
+        <td>
+        ${u.cpf}
+        </td>
+
+        <td>
+        ${u.senha}
+        </td>
+
+        <td>
+        ${u.perfil}
+        </td>
+
+        </tr>
+
+        `
+    ).join("");
+
+}
+
+
+/* ================= TEMA ================= */
+
+function toggleTheme(){
+
+    state.settings.dark=
+    !state.settings.dark;
+
+
+    save();
+
+    applySettings();
+
+}
+
+
+function setDark(value){
+
+    state.settings.dark=value;
+
+    save();
+
+    applySettings();
+
+}
+
+
+function setCompact(value){
+
+    state.settings.compact=value;
+
+    save();
+
+    applySettings();
+
+}
+
+
+function applySettings(){
+
+    document.body
+    .classList
+    .toggle(
+        "dark",
+        state.settings.dark
+    );
+
+
+}
+
+
+/* ================= RESET ================= */
+
+function resetDemo(){
+
+    if(
+        !confirm(
+            "Restaurar todos os dados?"
+        )
+    )return;
+
+
+    state=
+    createInitialState();
+
+
+    save();
+
+    populate();
+
+    showSection(
+        "dashboard"
+    );
+
+
+    toast(
+        "Dados restaurados.",
+        "success"
+    );
+
+}
+
+
+/* ================= BUSCA ================= */
+
+function globalSearch(value){
+
+    value=
+    value
+    .toLowerCase()
+    .trim();
+
+
+    if(value.length<2)
+        return;
+
+
+    const patient=
+    state.patients.find(
+        p=>
+        p.nome
+        .toLowerCase()
+        .includes(value)
+    );
+
+
+    const doctor=
+    doctors.find(
+        d=>
+        d.nome
+        .toLowerCase()
+        .includes(value)
+        ||
+        d.especialidade
+        .toLowerCase()
+        .includes(value)
+    );
+
+
+    if(patient){
+
+        showSection(
+            "pacientes"
+        );
+
+        document
+        .getElementById(
+            "patientSearch"
+        )
+        .value=value;
+
+        renderPatients();
+
+        return;
+
+    }
+
+
+    if(doctor){
+
+        showSection(
+            "medicos"
+        );
+
+        document
+        .getElementById(
+            "doctorSearch"
+        )
+        .value=value;
+
+        renderDoctors();
+
+    }
+
+}
+
+
+/* ================= MODAL ================= */
+
+function openModal(html){
+
+    document
+    .getElementById(
+        "modalBox"
+    )
+    .innerHTML=html;
+
+
+    document
+    .getElementById(
+        "modalBackdrop"
+    )
+    .classList
+    .add("open");
+
+}
+
+
+function closeModal(){
+
+    document
+    .getElementById(
+        "modalBackdrop"
+    )
+    .classList
+    .remove("open");
+
+}
+
+
+function backdropClose(e){
+
+    if(
+        e.target.id===
+        "modalBackdrop"
+    ){
+
+        closeModal();
+
+    }
+
+}
+
+
+/* ================= TOAST ================= */
+
+function toast(
+    message,
+    type=""
+){
+
+    const wrap=
+    document.getElementById(
+        "toastWrap"
+    );
+
+
+    const div=
+    document.createElement(
+        "div"
+    );
+
+
+    div.className=
+    "toast";
+
+
+    div.innerHTML=
+    `<div>
+    ${message}
+    </div>`;
+
+
+    wrap.appendChild(
+        div
+    );
+
+
+    setTimeout(
+        ()=>{
+            div.remove();
+        },
+        4000
+    );
+
+}
+
+
+/* ================= REFRESH ================= */
+
+function refresh(){
+
+    save();
+
+    populate();
+
+    const active=
+    document
+    .querySelector(
+        ".section.active"
+    );
+
+
+    if(active)
+        renderSection(
+            active.id
+        );
+
+}
+
+
+/* ================= MOBILE ================= */
+
+function toggleSidebar(){
+
+    document
+    .getElementById(
+        "sidebar"
+    )
+    .classList
+    .toggle("open");
+
+}
+
+
+/* ================= TECLAS ================= */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key==="Escape")
+            closeModal();
+
+        if(
+            e.key==="Enter" &&
+            document.activeElement.id===
+            "loginSenha"
+        ){
+
+            login();
+
+        }
+
+    }
+);
+
+
+/* ================= START ================= */
+
+document
+.getElementById("loginCpf")
+.addEventListener(
+    "input",
+    function(){
+
+        this.value=
+        this.value
+        .replace(/\D/g,"")
+        .slice(0,11);
+
+    }
+);
+
+
+</script>
+
+</body>
+</html>

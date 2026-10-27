@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maior e Menor Número</title>
+</head>
+<body>
+    <p>Digite o primeiro número:</p>
+    <input type="number" id="numero1">
+    <p>Digite o segundo número:</p>
+    <input type="number" id="numero2">
+    <p>Digite o terceiro número:</p>
+    <input type="number" id="numero3">
+    <br><br>
+    <button onclick="verificar()">Verificar</button>
+    <p id="resultado"></p>
+    <script>
+        function verificar() {
+            let numero1 = Number(document.getElementById("numero1").value);
+            let numero2 = Number(document.getElementById("numero2").value);
+            let numero3 = Number(document.getElementById("numero3").value);
+            let maior;
+            let menor;
+            if (numero1 > numero2 && numero1 > numero3) {
+                maior = numero1;
+            }
+            else if (numero2 > numero1 && numero2 > numero3) {
+                maior = numero2;
+            }
+            else {
+                maior = numero3;
+            }
+            if (numero1 < numero2 && numero1 < numero3) {
+                menor = numero1;
+            }
+            else if (numero2 < numero1 && numero2 < numero3) {
+                menor = numero2;
+            }
+            else {
+                menor = numero3;
+            }
+            document.getElementById("resultado").innerHTML =
+                "O maior número é: " + maior + "<br>" +
+                "O menor número é: " + menor;
+        }
+
+    </script>
+
+</body>
+</html>

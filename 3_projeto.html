@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TACQV | Sistema Integrado de Saúde</title>
+
+<style>
+
+/* =========================================================
+   CONFIGURAÇÕES GERAIS
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",Arial,sans-serif;
+}
+
+:root{
+    --primary:#0f766e;
+    --primary-dark:#115e59;
+    --secondary:#0891b2;
+    --background:#f1f5f9;
+    --white:#ffffff;
+    --dark:#0f172a;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#d97706;
+}
+
+body{
+    background:var(--background);
+    color:var(--text);
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+
+    background:
+        radial-gradient(circle at top left,#14b8a6,transparent 35%),
+        linear-gradient(135deg,#0f766e,#0e7490);
+}
+
+.login-container{
+    width:450px;
+    max-width:100%;
+    background:white;
+    border-radius:24px;
+    padding:40px;
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.logo{
+    width:82px;
+    height:82px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#0f766e,#0891b2);
+    color:white;
+
+    border-radius:22px;
+
+    font-size:30px;
+    font-weight:bold;
+
+    box-shadow:0 10px 25px rgba(15,118,110,.3);
+}
+
+.login-title{
+    text-align:center;
+    margin-top:18px;
+}
+
+.login-title h1{
+    color:var(--primary);
+    font-size:28px;
+}
+
+.login-title p{
+    color:var(--muted);
+    margin-top:8px;
+    line-height:1.5;
+}
+
+.form-group{
+    margin-top:18px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:13px 14px;
+
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+
+    outline:none;
+    transition:.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(15,118,110,.1);
+}
+
+.password-container{
+    position:relative;
+}
+
+.password-container input{
+    padding-right:50px;
+}
+
+.password-container button{
+    position:absolute;
+    right:6px;
+    top:6px;
+
+    width:38px;
+    height:38px;
+
+    border:0;
+    background:transparent;
+
+    cursor:pointer;
+    font-size:18px;
+}
+
+.login-button{
+    width:100%;
+    margin-top:25px;
+
+    padding:14px;
+
+    border:0;
+    border-radius:10px;
+
+    background:var(--primary);
+    color:white;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+    transition:.2s;
+}
+
+.login-button:hover{
+    background:var(--primary-dark);
+    transform:translateY(-1px);
+}
+
+.login-error{
+    display:none;
+
+    margin-top:15px;
+    padding:11px;
+
+    border-radius:9px;
+
+    background:#fee2e2;
+    color:#b91c1c;
+
+    text-align:center;
+}
+
+.demo-box{
+    margin-top:20px;
+    padding:15px;
+
+    background:#f0fdfa;
+    border:1px solid #ccfbf1;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    color:#134e4a;
+    font-size:13px;
+}
+
+.demo-box strong{
+    display:block;
+    margin-bottom:7px;
+}
+
+/* =========================================================
+   SISTEMA
+========================================================= */
+
+#system{
+    display:none;
+}
+
+.topbar{
+    height:70px;
+
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+
+    background:white;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 25px;
+
+    z-index:100;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-logo{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--primary);
+    color:white;
+
+    border-radius:11px;
+
+    font-weight:bold;
+}
+
+.brand-name{
+    font-size:20px;
+    font-weight:bold;
+    color:var(--primary);
+}
+
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-name{
+    font-weight:600;
+}
+
+.user-avatar{
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:bold;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+    position:fixed;
+
+    top:70px;
+    left:0;
+    bottom:0;
+
+    width:240px;
+
+    background:#0f172a;
+
+    padding:20px 12px;
+
+    overflow-y:auto;
+}
+
+.menu-title{
+    color:#64748b;
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    padding:10px 12px;
+}
+
+.menu-button{
+    width:100%;
+
+    border:0;
+
+    background:transparent;
+
+    color:#cbd5e1;
+
+    padding:13px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    text-align:left;
+
+    margin-bottom:5px;
+
+    transition:.2s;
+}
+
+.menu-button:hover{
+    background:#1e293b;
+    color:white;
+}
+
+.menu-button.active{
+    background:var(--primary);
+    color:white;
+}
+
+.menu-button.danger:hover{
+    background:#7f1d1d;
+}
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.content{
+    margin-left:240px;
+
+    padding:100px 30px 40px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-header{
+    margin-bottom:25px;
+}
+
+.page-header h2{
+    font-size:28px;
+}
+
+.page-header p{
+    color:var(--muted);
+    margin-top:5px;
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+}
+
+.stat-card{
+    background:white;
+
+    padding:22px;
+
+    border-radius:15px;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,.05);
+
+    position:relative;
+    overflow:hidden;
+}
+
+.stat-card::after{
+    content:"";
+
+    position:absolute;
+
+    width:80px;
+    height:80px;
+
+    border-radius:50%;
+
+    right:-25px;
+    top:-25px;
+
+    background:#ccfbf1;
+}
+
+.stat-icon{
+    font-size:25px;
+}
+
+.stat-title{
+    color:var(--muted);
+    margin-top:12px;
+    font-size:14px;
+}
+
+.stat-number{
+    font-size:30px;
+    font-weight:bold;
+
+    color:var(--primary);
+
+    margin-top:5px;
+}
+
+.dashboard-grid{
+    display:grid;
+
+    grid-template-columns:
+        2fr 1fr;
+
+    gap:20px;
+
+    margin-top:20px;
+}
+
+.card{
+    background:white;
+
+    border-radius:15px;
+
+    padding:22px;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,.05);
+}
+
+.card-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.card-title h3{
+    font-size:17px;
+}
+
+.card-title span{
+    color:var(--primary);
+    font-size:13px;
+}
+
+/* =========================================================
+   TABELAS
+========================================================= */
+
+.table-container{
+    background:white;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    margin-top:20px;
+
+    overflow-x:auto;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,.05);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+
+    min-width:700px;
+}
+
+th{
+    background:#f8fafc;
+
+    color:#475569;
+
+    font-size:13px;
+
+    text-align:left;
+}
+
+th,
+td{
+    padding:13px;
+
+    border-bottom:1px solid var(--border);
+}
+
+td{
+    font-size:14px;
+}
+
+.status{
+    display:inline-block;
+
+    padding:5px 10px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:600;
+}
+
+.status.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status.pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status.cancel{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+/* =========================================================
+   FORMULÁRIOS
+========================================================= */
+
+.form-card{
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    max-width:900px;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,.05);
+}
+
+.form-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:18px;
+}
+
+.action-button{
+    margin-top:22px;
+
+    border:0;
+
+    padding:13px 22px;
+
+    border-radius:9px;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.action-button:hover{
+    background:var(--primary-dark);
+}
+
+/* =========================================================
+   PESQUISA
+========================================================= */
+
+.search{
+    width:100%;
+
+    max-width:400px;
+
+    padding:12px;
+
+    border:1px solid #cbd5e1;
+
+    border-radius:9px;
+
+    outline:none;
+
+    margin-top:15px;
+}
+
+/* =========================================================
+   PERFIL
+========================================================= */
+
+.profile-card{
+    max-width:750px;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,.05);
+}
+
+.big-avatar{
+    width:90px;
+    height:90px;
+
+    background:var(--primary);
+
+    color:white;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:35px;
+    font-weight:bold;
+
+    margin-bottom:20px;
+}
+
+.profile-line{
+    padding:13px 0;
+
+    border-bottom:1px solid var(--border);
+}
+
+.profile-line strong{
+    display:inline-block;
+
+    width:100px;
+}
+
+/* =========================================================
+   NOTIFICAÇÕES
+========================================================= */
+
+.notification{
+    display:flex;
+
+    gap:15px;
+
+    padding:15px 0;
+
+    border-bottom:1px solid var(--border);
+}
+
+.notification-icon{
+    width:42px;
+    height:42px;
+
+    border-radius:10px;
+
+    background:#ccfbf1;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* =========================================================
+   RODAPÉ
+========================================================= */
+
+.footer{
+    text-align:center;
+
+    margin-top:35px;
+
+    color:#94a3b8;
+
+    font-size:12px;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        width:70px;
+    }
+
+    .menu-title{
+        display:none;
+    }
+
+    .menu-button{
+        font-size:0;
+        text-align:center;
+    }
+
+    .menu-button::first-letter{
+        font-size:20px;
+    }
+
+    .content{
+        margin-left:70px;
+        padding:90px 15px 30px;
+    }
+
+    .brand-name{
+        display:none;
+    }
+
+    .user-name{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ========================================================
+     LOGIN
+========================================================= -->
+
+<div id="loginScreen">
+
+<div class="login-container">
+
+<div class="logo">
+TQ
+</div>
+
+<div class="login-title">
+
+<h1>TACQV</h1>
+
+<p>
+Tecnologia Aplicada ao Cuidado e Qualidade de Vida
+</p>
+
+</div>
+
+<div class="form-group">
+
+<label>CPF</label>
+
+<input
+id="loginCpf"
+type="text"
+maxlength="11"
+placeholder="Digite seu CPF"
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Senha</label>
+
+<div class="password-container">
+
+<input
+id="loginSenha"
+type="password"
+placeholder="Digite sua senha"
+>
+
+<button onclick="mostrarSenha()">
+👁️
+</button>
+
+</div>
+
+</div>
+
+<button
+class="login-button"
+onclick="fazerLogin()"
+>
+ENTRAR NO SISTEMA
+</button>
+
+<div
+id="loginError"
+class="login-error"
+>
+CPF ou senha incorretos.
+</div>
+
+<div class="demo-box">
+
+<strong>🔐 Acesso demonstrativo</strong>
+
+CPF: <b>11111111111</b><br>
+
+Senha: <b>123456</b>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ========================================================
+     SISTEMA
+========================================================= -->
+
+<div id="system">
+
+<!-- TOPBAR -->
+
+<header class="topbar">
+
+<div class="brand">
+
+<div class="brand-logo">
+TQ
+</div>
+
+<div class="brand-name">
+TACQV
+</div>
+
+</div>
+
+<div class="user-area">
+
+<span
+class="user-name"
+id="topUserName"
+>
+Usuário
+</span>
+
+<div
+class="user-avatar"
+id="topAvatar"
+>
+U
+</div>
+
+</div>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="menu-title">
+Principal
+</div>
+
+<button
+class="menu-button active"
+onclick="abrirPagina('dashboard',this)"
+>
+🏠 Início
+</button>
+
+<button
+class="menu-button"
+onclick="abrirPagina('consultas',this)"
+>
+📅 Consultas
+</button>
+
+<button
+class="menu-button"
+onclick="abrirPagina('exames',this)"
+>
+🧪 Exames
+</button>
+
+
+<div class="menu-title">
+Cadastros
+</div>
+
+<button
+class="menu-button"
+onclick="abrirPagina('medicos',this)"
+>
+👨‍⚕️ Médicos
+</button>
+
+<button
+class="menu-button"
+onclick="abrirPagina('pacientes',this)"
+>
+👥 Pacientes
+</button>
+
+
+<div class="menu-title">
+Conta
+</div>
+
+<button
+class="menu-button"
+onclick="abrirPagina('historico',this)"
+>
+📋 Histórico
+</button>
+
+<button
+class="menu-button"
+onclick="abrirPagina('notificacoes',this)"
+>
+🔔 Notificações
+</button>
+
+<button
+class="menu-button"
+onclick="abrirPagina('perfil',this)"
+>
+👤 Meu Perfil
+</button>
+
+<button
+class="menu-button danger"
+onclick="sair()"
+>
+🚪 Sair
+</button>
+
+</aside>
+
+
+<!-- CONTEÚDO -->
+
+<main class="content">
+
+
+<!-- ======================================================
+     DASHBOARD
+======================================================= -->
+
+<section
+id="dashboard"
+class="page active"
+>
+
+<div class="page-header">
+
+<h2>
+Olá, <span id="welcomeName"></span> 👋
+</h2>
+
+<p>
+Bem-vindo ao painel administrativo do TACQV.
+</p>
+
+</div>
+
+
+<div class="stats">
+
+<div class="stat-card">
+
+<div class="stat-icon">
+📅
+</div>
+
+<div class="stat-title">
+Consultas agendadas
+</div>
+
+<div
+class="stat-number"
+id="statConsultas"
+>
+0
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+🧪
+</div>
+
+<div class="stat-title">
+Exames agendados
+</div>
+
+<div
+class="stat-number"
+id="statExames"
+>
+0
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+👨‍⚕️
+</div>
+
+<div class="stat-title">
+Médicos
+</div>
+
+<div class="stat-number">
+10
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+👥
+</div>
+
+<div class="stat-title">
+Pacientes
+</div>
+
+<div class="stat-number">
+10
+</div>
+
+</div>
+
+</div>
+
+
+<div class="dashboard-grid">
+
+
+<div class="card">
+
+<div class="card-title">
+
+<h3>
+Próximas consultas
+</h3>
+
+<span>
+Agenda
+</span>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Médico</th>
+<th>Especialidade</th>
+<th>Data</th>
+<th>Horário</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="dashboardTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+
+<h3>
+Resumo
+</h3>
+
+</div>
+
+<p>
+Sistema funcionando normalmente.
+</p>
+
+<br>
+
+<p>
+🟢 Banco demonstrativo ativo
+</p>
+
+<br>
+
+<p>
+🔵 Usuários fictícios
+</p>
+
+<br>
+
+<p>
+🟢 Ambiente acadêmico
+</p>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+TACQV © 2026 — Projeto Integrador
+<br>
+Todos os dados apresentados são fictícios.
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     CONSULTAS
+======================================================= -->
+
+<section
+id="consultas"
+class="page"
+>
+
+<div class="page-header">
+
+<h2>
+📅 Consultas
+</h2>
+
+<p>
+Agende e visualize consultas.
+</p>
+
+</div>
+
+
+<div class="form-card">
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+Médico
+</label>
+
+<select id="doctorSelect">
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Data
+</label>
+
+<input
+type="date"
+id="appointmentDate"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Horário
+</label>
+
+<select id="appointmentTime">
+
+<option>08:00</option>
+<option>09:00</option>
+<option>10:00</option>
+<option>11:00</option>
+<option>13:00</option>
+<option>14:00</option>
+<option>15:00</option>
+<option>16:00</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<button
+class="action-button"
+onclick="agendarConsulta()"
+>
++ Agendar consulta
+</button>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Médico</th>
+<th>Especialidade</th>
+<th>Data</th>
+<th>Horário</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="appointmentsTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     EXAMES
+======================================================= -->
+
+<section
+id="exames"
+class="page"
+>
+
+<div class="page-header">
+
+<h2>
+🧪 Exames
+</h2>
+
+<p>
+Agendamento de exames laboratoriais e de imagem.
+</p>
+
+</div>
+
+
+<div class="form-card">
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+Exame
+</label>
+
+<select id="examSelect">
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Data
+</label>
+
+<input
+type="date"
+id="examDate"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Unidade
+</label>
+
+<select id="unitSelect">
+
+<option>
+TACQV Centro
+</option>
+
+<option>
+TACQV Norte
+</option>
+
+<option>
+TACQV Sul
+</option>
+
+<option>
+TACQV Hospital
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<button
+class="action-button"
+onclick="agendarExame()"
+>
++ Agendar exame
+</button>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Exame</th>
+<th>Unidade</th>
+<th>Data</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="examsTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     MÉDICOS
+======================================================= -->
+
+<section
+id="medicos"
+class="page"
+>
+
+<div class="page-header">
+
+<h2>
+👨‍⚕️ Médicos
+</h2>
+
+<p>
+Equipe médica fictícia.
+</p>
+
+</div>
+
+
+<input
+class="search"
+id="doctorSearch"
+placeholder="🔎 Pesquisar médico..."
+onkeyup="pesquisarMedico()"
+>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Nome</th>
+<th>Especialidade</th>
+<th>CRM</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="doctorsTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     PACIENTES
+======================================================= -->
+
+<section
+id="pacientes"
+class="page"
+>
+
+<div class="page-header">
+
+<h2>
+👥 Pacientes
+</h2>
+
+<p>
+Cadastro demonstrativo.
+</p>
+
+</div>
+
+
+<input
+class="search"
+id="patientSearch"
+placeholder="🔎 Pesquisar paciente..."
+onkeyup="pesquisarPaciente()"
+>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Código</th>
+<th>Nome</th>
+<th>CPF fictício</th>
+<th>Data de nascimento</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="patientsTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     HISTÓRICO
+======================================================= -->
+
+<section
+id="historico"
+class="page"
+>
+
+<div class="page-header">
+
+<h2>
+📋 Histórico
+</h2>
+
+<p>
+Histórico acadêmico fictício.
+</p>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Data</th>
+<th>Tipo</th>
+<th>Descrição</th>
+<th>Profissional</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>15/08/2026</td>
+<td>Consulta</td>
+<td>Clínica Geral</td>
+<td>Dra. Ana Souza</td>
+
+<td>
+<span class="status success">
+Concluído
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>20/08/2026</td>
+<td>Exame</td>
+<td>Hemograma completo</td>
+<td>Laboratório TACQV</td>
+
+<td>
+<span class="status success">
+Concluído
+</span>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>28/08/2026</td>
+<td>Exame</td>
+<td>Eletrocardiograma</td>
+<td>TACQV Hospital</td>
+
+<td>
+<span class="status success">
+Concluído
+</span>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     NOTIFICAÇÕES
+======================================================= -->
+
+<section
+id="notificacoes"
+class="page"
+>
+
+<div class="page-header">
+
+<h2>
+🔔 Notificações
+</h2>
+
+<p>
+Avisos do sistema.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="notification">
+
+<div class="notification-icon">
+📅
+</div>
+
+<div>
+
+<strong>
+Consulta agendada
+</strong>
+
+<p>
+Sua consulta fictícia foi registrada no sistema.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="notification">
+
+<div class="notification-icon">
+🧪
+</div>
+
+<div>
+
+<strong>
+Exame disponível
+</strong>
+
+<p>
+O sistema possui novos horários disponíveis.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="notification">
+
+<div class="notification-icon">
+🔐
+</div>
+
+<div>
+
+<strong>
+Sistema acadêmico
+</strong>
+
+<p>
+Este sistema utiliza exclusivamente dados fictícios.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+     PERFIL
+======================================================= -->
+
+<section
+id="perfil"
+class="page"
+>
+
+<div class="page-header">
+
+<h2>
+👤 Meu Perfil
+</h2>
+
+<p>
+Informações do usuário conectado.
+</p>
+
+</div>
+
+
+<div class="profile-card">
+
+<div
+class="big-avatar"
+id="profileAvatar"
+>
+U
+</div>
+
+
+<div class="profile-line">
+
+<strong>
+Nome:
+</strong>
+
+<span id="profileName">
+-
+</span>
+
+</div>
+
+
+<div class="profile-line">
+
+<strong>
+CPF:
+</strong>
+
+<span id="profileCpf">
+-
+</span>
+
+</div>
+
+
+<div class="profile-line">
+
+<strong>
+Código:
+</strong>
+
+<span id="profileCode">
+-
+</span>
+
+</div>
+
+
+<div class="profile-line">
+
+<strong>
+Status:
+</strong>
+
+<span class="status success">
+Conta ativa
+</span>
+
+</div>
+
+
+<div class="profile-line">
+
+<strong>
+Ambiente:
+</strong>
+
+<span>
+Acadêmico
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   USUÁRIOS FICTÍCIOS
+========================================================= */
+
+const usuarios = [
+
+{
+cpf:"11111111111",
+senha:"123456",
+nome:"Lucas Almeida",
+codigo:"TACQV001"
+},
+
+{
+cpf:"22222222222",
+senha:"123457",
+nome:"Gabriel Santos",
+codigo:"TACQV002"
+},
+
+{
+cpf:"33333333333",
+senha:"123458",
+nome:"João Oliveira",
+codigo:"TACQV003"
+},
+
+{
+cpf:"44444444444",
+senha:"123459",
+nome:"Pedro Henrique",
+codigo:"TACQV004"
+},
+
+{
+cpf:"55555555555",
+senha:"123460",
+nome:"Matheus Costa",
+codigo:"TACQV005"
+},
+
+{
+cpf:"66666666666",
+senha:"123461",
+nome:"Rafael Martins",
+codigo:"TACQV006"
+},
+
+{
+cpf:"77777777777",
+senha:"123462",
+nome:"Ana Clara Souza",
+codigo:"TACQV007"
+},
+
+{
+cpf:"88888888888",
+senha:"123463",
+nome:"Mariana Alves",
+codigo:"TACQV008"
+},
+
+{
+cpf:"99999999999",
+senha:"123464",
+nome:"Beatriz Lima",
+codigo:"TACQV009"
+},
+
+{
+cpf:"00000000000",
+senha:"123465",
+nome:"Júlia Ferreira",
+codigo:"TACQV010"
+}
+
+];
+
+
+/* =========================================================
+   MÉDICOS FICTÍCIOS
+========================================================= */
+
+const medicos = [
+
+["Dr. Carlos Mendes","Cardiologia","CRM-TQ1001"],
+["Dra. Ana Souza","Clínica Geral","CRM-TQ1002"],
+["Dr. Rafael Oliveira","Ortopedia","CRM-TQ1003"],
+["Dra. Mariana Costa","Dermatologia","CRM-TQ1004"],
+["Dr. Felipe Santos","Neurologia","CRM-TQ1005"],
+["Dra. Juliana Lima","Pediatria","CRM-TQ1006"],
+["Dr. Eduardo Martins","Oftalmologia","CRM-TQ1007"],
+["Dra. Camila Ferreira","Ginecologia","CRM-TQ1008"],
+["Dr. Bruno Almeida","Urologia","CRM-TQ1009"],
+["Dra. Fernanda Rocha","Endocrinologia","CRM-TQ1010"]
+
+];
+
+
+/* =========================================================
+   EXAMES
+========================================================= */
+
+const exames = [
+
+"Hemograma completo",
+"Glicemia",
+"Colesterol",
+"Exame de urina",
+"Ultrassonografia",
+"Raio-X",
+"Tomografia",
+"Ressonância magnética",
+"Eletrocardiograma",
+"TSH",
+"Vitamina D",
+"Creatinina",
+"Ecocardiograma"
+
+];
+
+
+/* =========================================================
+   PACIENTES FICTÍCIOS
+========================================================= */
+
+const pacientes = [
+
+["TACQV001","Lucas Almeida","11111111111","15/08/2009"],
+["TACQV002","Gabriel Santos","22222222222","21/03/2008"],
+["TACQV003","João Oliveira","33333333333","10/11/2009"],
+["TACQV004","Pedro Henrique","44444444444","05/02/2008"],
+["TACQV005","Matheus Costa","55555555555","18/07/2009"],
+["TACQV006","Rafael Martins","66666666666","29/01/2008"],
+["TACQV007","Ana Clara Souza","77777777777","13/06/2009"],
+["TACQV008","Mariana Alves","88888888888","22/09/2008"],
+["TACQV009","Beatriz Lima","99999999999","04/12/2009"],
+["TACQV010","Júlia Ferreira","00000000000","30/05/2008"]
+
+];
+
+
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
+
+let usuarioAtual = null;
+
+let consultas = JSON.parse(
+localStorage.getItem("tacqv_consultas")
+) || [
+
+{
+medico:"Dr. Carlos Mendes",
+especialidade:"Cardiologia",
+data:"25/09/2026",
+hora:"09:00",
+status:"Confirmado"
+}
+
+];
+
+let examesAgendados = JSON.parse(
+localStorage.getItem("tacqv_exames")
+) || [];
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function fazerLogin(){
+
+const cpf =
+document.getElementById("loginCpf").value.trim();
+
+const senha =
+document.getElementById("loginSenha").value.trim();
+
+
+const usuario =
+usuarios.find(
+u =>
+u.cpf === cpf &&
+u.senha === senha
+);
+
+
+if(!usuario){
+
+document.getElementById(
+"loginError"
+).style.display = "block";
+
+return;
+
+}
+
+
+usuarioAtual = usuario;
+
+
+document.getElementById(
+"loginScreen"
+).style.display = "none";
+
+document.getElementById(
+"system"
+).style.display = "block";
+
+
+carregarUsuario();
+
+carregarSistema();
+
+}
+
+
+/* =========================================================
+   USUÁRIO
+========================================================= */
+
+function carregarUsuario(){
+
+const nome =
+usuarioAtual.nome;
+
+
+document.getElementById(
+"topUserName"
+).textContent =
+nome;
+
+
+document.getElementById(
+"topAvatar"
+).textContent =
+nome.charAt(0);
+
+
+document.getElementById(
+"welcomeName"
+).textContent =
+nome.split(" ")[0];
+
+
+document.getElementById(
+"profileAvatar"
+).textContent =
+nome.charAt(0);
+
+
+document.getElementById(
+"profileName"
+).textContent =
+nome;
+
+
+document.getElementById(
+"profileCpf"
+).textContent =
+usuarioAtual.cpf;
+
+
+document.getElementById(
+"profileCode"
+).textContent =
+usuarioAtual.codigo;
+
+}
+
+
+/* =========================================================
+   MOSTRAR SENHA
+========================================================= */
+
+function mostrarSenha(){
+
+const campo =
+document.getElementById(
+"loginSenha"
+);
+
+
+campo.type =
+campo.type === "password"
+? "text"
+: "password";
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
+function abrirPagina(id,botao){
+
+document
+.querySelectorAll(".page")
+.forEach(
+pagina =>
+pagina.classList.remove("active")
+);
+
+
+document
+.getElementById(id)
+.classList.add("active");
+
+
+document
+.querySelectorAll(".menu-button")
+.forEach(
+button =>
+button.classList.remove("active")
+);
+
+
+botao.classList.add("active");
+
+}
+
+
+/* =========================================================
+   CARREGAR SISTEMA
+========================================================= */
+
+function carregarSistema(){
+
+carregarMedicos();
+
+carregarExames();
+
+carregarPacientes();
+
+renderConsultas();
+
+renderExames();
+
+}
+
+
+/* =========================================================
+   MÉDICOS
+========================================================= */
+
+function carregarMedicos(){
+
+const select =
+document.getElementById(
+"doctorSelect"
+);
+
+
+select.innerHTML =
+medicos.map(
+m =>
+
+`<option value="${m[0]}|${m[1]}">
+${m[0]} — ${m[1]}
+</option>`
+
+).join("");
+
+
+renderMedicos(medicos);
+
+}
+
+
+function renderMedicos(lista){
+
+const tabela =
+document.getElementById(
+"doctorsTable"
+);
+
+
+tabela.innerHTML =
+lista.map(
+m =>
+
+`<tr>
+
+<td>${m[0]}</td>
+
+<td>${m[1]}</td>
+
+<td>${m[2]}</td>
+
+<td>
+
+<span class="status success">
+Disponível
+</span>
+
+</td>
+
+</tr>`
+
+).join("");
+
+}
+
+
+/* =========================================================
+   PESQUISA MÉDICO
+========================================================= */
+
+function pesquisarMedico(){
+
+const texto =
+document
+.getElementById("doctorSearch")
+.value
+.toLowerCase();
+
+
+const resultado =
+medicos.filter(
+m =>
+m[0].toLowerCase()
+.includes(texto)
+||
+m[1].toLowerCase()
+.includes(texto)
+);
+
+
+renderMedicos(resultado);
+
+}
+
+
+/* =========================================================
+   EXAMES
+========================================================= */
+
+function carregarExames(){
+
+const select =
+document.getElementById(
+"examSelect"
+);
+
+
+select.innerHTML =
+exames.map(
+e =>
+`<option>${e}</option>`
+).join("");
+
+}
+
+
+/* =========================================================
+   PACIENTES
+========================================================= */
+
+function carregarPacientes(){
+
+renderPacientes(pacientes);
+
+}
+
+
+function renderPacientes(lista){
+
+const tabela =
+document.getElementById(
+"patientsTable"
+);
+
+
+tabela.innerHTML =
+lista.map(
+p =>
+
+`<tr>
+
+<td>${p[0]}</td>
+
+<td>${p[1]}</td>
+
+<td>${p[2]}</td>
+
+<td>${p[3]}</td>
+
+<td>
+
+<span class="status success">
+Ativo
+</span>
+
+</td>
+
+</tr>`
+
+).join("");
+
+}
+
+
+/* =========================================================
+   PESQUISA PACIENTE
+========================================================= */
+
+function pesquisarPaciente(){
+
+const texto =
+document
+.getElementById("patientSearch")
+.value
+.toLowerCase();
+
+
+const resultado =
+pacientes.filter(
+p =>
+p[1].toLowerCase()
+.includes(texto)
+);
+
+
+renderPacientes(resultado);
+
+}
+
+
+/* =========================================================
+   AGENDAR CONSULTA
+========================================================= */
+
+function agendarConsulta(){
+
+const medicoSelecionado =
+document.getElementById(
+"doctorSelect"
+).value;
+
+
+const data =
+document.getElementById(
+"appointmentDate"
+).value;
+
+
+const hora =
+document.getElementById(
+"appointmentTime"
+).value;
+
+
+if(!data){
+
+alert(
+"Selecione uma data para a consulta."
+);
+
+return;
+
+}
+
+
+const partes =
+medicoSelecionado.split("|");
+
+
+const novaConsulta = {
+
+medico:partes[0],
+
+especialidade:partes[1],
+
+data:data.split("-")
+.reverse()
+.join("/"),
+
+hora:hora,
+
+status:"Agendado"
+
+};
+
+
+consultas.push(
+novaConsulta
+);
+
+
+salvarDados();
+
+renderConsultas();
+
+
+alert(
+"Consulta agendada com sucesso!"
+);
+
+}
+
+
+/* =========================================================
+   RENDER CONSULTAS
+========================================================= */
+
+function renderConsultas(){
+
+const tabela =
+document.getElementById(
+"appointmentsTable"
+);
+
+
+const dashboard =
+document.getElementById(
+"dashboardTable"
+);
+
+
+const html =
+consultas.map(
+c =>
+
+`<tr>
+
+<td>${c.medico}</td>
+
+<td>${c.especialidade}</td>
+
+<td>${c.data}</td>
+
+<td>${c.hora}</td>
+
+<td>
+
+<span class="status success">
+${c.status}
+</span>
+
+</td>
+
+</tr>`
+
+).join("");
+
+
+tabela.innerHTML =
+html ||
+`<tr>
+<td colspan="5">
+Nenhuma consulta encontrada.
+</td>
+</tr>`;
+
+
+dashboard.innerHTML =
+html ||
+`<tr>
+<td colspan="5">
+Nenhuma consulta agendada.
+</td>
+</tr>`;
+
+
+document.getElementById(
+"statConsultas"
+).textContent =
+consultas.length;
+
+}
+
+
+/* =========================================================
+   AGENDAR EXAME
+========================================================= */
+
+function agendarExame(){
+
+const exame =
+document.getElementById(
+"examSelect"
+).value;
+
+
+const data =
+document.getElementById(
+"examDate"
+).value;
+
+
+const unidade =
+document.getElementById(
+"unitSelect"
+).value;
+
+
+if(!data){
+
+alert(
+"Selecione uma data para o exame."
+);
+
+return;
+
+}
+
+
+examesAgendados.push({
+
+exame:exame,
+
+data:data.split("-")
+.reverse()
+.join("/"),
+
+unidade:unidade,
+
+status:"Agendado"
+
+});
+
+
+salvarDados();
+
+renderExames();
+
+
+alert(
+"Exame agendado com sucesso!"
+);
+
+}
+
+
+/* =========================================================
+   RENDER EXAMES
+========================================================= */
+
+function renderExames(){
+
+const tabela =
+document.getElementById(
+"examsTable"
+);
+
+
+tabela.innerHTML =
+examesAgendados.map(
+e =>
+
+`<tr>
+
+<td>${e.exame}</td>
+
+<td>${e.unidade}</td>
+
+<td>${e.data}</td>
+
+<td>
+
+<span class="status success">
+${e.status}
+</span>
+
+</td>
+
+</tr>`
+
+).join("");
+
+
+if(
+examesAgendados.length === 0
+){
+
+tabela.innerHTML =
+`<tr>
+
+<td colspan="4">
+Nenhum exame agendado.
+</td>
+
+</tr>`;
+
+}
+
+
+document.getElementById(
+"statExames"
+).textContent =
+examesAgendados.length;
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
+
+function salvarDados(){
+
+localStorage.setItem(
+"tacqv_consultas",
+JSON.stringify(
+consultas
+)
+);
+
+
+localStorage.setItem(
+"tacqv_exames",
+JSON.stringify(
+examesAgendados
+)
+);
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function sair(){
+
+usuarioAtual = null;
+
+
+document.getElementById(
+"system"
+).style.display =
+"none";
+
+
+document.getElementById(
+"loginScreen"
+).style.display =
+"flex";
+
+
+document.getElementById(
+"loginCpf"
+).value = "";
+
+
+document.getElementById(
+"loginSenha"
+).value = "";
+
+
+document.getElementById(
+"loginError"
+).style.display =
+"none";
+
+}
+
+
+/* =========================================================
+   ENTER NO LOGIN
+========================================================= */
+
+document
+.getElementById("loginSenha")
+.addEventListener(
+"keydown",
+function(event){
+
+if(event.key === "Enter"){
+
+fazerLogin();
+
+}
+
+}
+);
+
+</script>
+
+</body>
+</html>

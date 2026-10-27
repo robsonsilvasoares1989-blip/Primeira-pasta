@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TACQV - Sistema de Saúde</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f1f5f9;
+}
+
+/* =========================
+        TELA DE LOGIN
+========================= */
+
+#login{
+    width:100%;
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        #0f766e,
+        #06b6d4
+    );
+}
+
+.login-box{
+    width:380px;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,0.3);
+
+    text-align:center;
+}
+
+.logo{
+    width:80px;
+    height:80px;
+
+    margin:auto;
+
+    border-radius:20px;
+
+    background:#0f766e;
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:28px;
+    font-weight:bold;
+}
+
+.login-box h1{
+    color:#0f766e;
+
+    margin-top:15px;
+}
+
+.login-box p{
+    color:#64748b;
+
+    font-size:14px;
+
+    margin:8px 0 25px;
+}
+
+.login-box input{
+    width:100%;
+
+    padding:14px;
+
+    margin:7px 0;
+
+    border:1px solid #cbd5e1;
+
+    border-radius:10px;
+
+    outline:none;
+}
+
+.login-box input:focus{
+    border-color:#0f766e;
+}
+
+.login-box button{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#0f766e;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.login-box button:hover{
+    background:#115e59;
+}
+
+#erro{
+    display:none;
+
+    margin-top:15px;
+
+    padding:10px;
+
+    background:#fee2e2;
+
+    color:#991b1b;
+
+    border-radius:8px;
+
+    font-size:13px;
+}
+
+.acesso{
+    margin-top:20px;
+
+    padding:12px;
+
+    background:#ecfeff;
+
+    color:#155e75;
+
+    border-radius:10px;
+
+    font-size:12px;
+}
+
+
+/* =========================
+       PÁGINA PRINCIPAL
+========================= */
+
+#pagina{
+    display:none;
+}
+
+
+/* MENU */
+
+.menu{
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:240px;
+
+    height:100vh;
+
+    background:#0f172a;
+
+    color:white;
+
+    padding:25px 15px;
+}
+
+.menu h2{
+    text-align:center;
+
+    margin-bottom:30px;
+
+    color:#5eead4;
+}
+
+.menu button{
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:8px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    color:#cbd5e1;
+
+    text-align:left;
+
+    cursor:pointer;
+}
+
+.menu button:hover{
+    background:#134e4a;
+
+    color:white;
+}
+
+.sair{
+    position:absolute;
+
+    bottom:25px;
+
+    left:15px;
+
+    width:210px !important;
+
+    background:#991b1b !important;
+
+    color:white !important;
+}
+
+
+/* CONTEÚDO */
+
+.conteudo{
+    margin-left:240px;
+
+    padding:30px;
+}
+
+.topo{
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    margin-bottom:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.usuario{
+    color:#0f766e;
+
+    font-weight:bold;
+}
+
+
+/* CARDS */
+
+.cards{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+}
+
+.card{
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.card h3{
+    color:#64748b;
+
+    font-size:14px;
+}
+
+.card strong{
+    display:block;
+
+    margin-top:10px;
+
+    font-size:30px;
+
+    color:#0f766e;
+}
+
+
+/* SEÇÕES */
+
+.secao{
+    display:none;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    margin-top:25px;
+}
+
+.secao h2{
+    color:#0f766e;
+
+    margin-bottom:15px;
+}
+
+
+/* TABELA */
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:13px;
+
+    border-bottom:1px solid #e2e8f0;
+
+    text-align:left;
+}
+
+th{
+    background:#f8fafc;
+}
+
+
+/* FORM */
+
+.form{
+    max-width:600px;
+}
+
+.form input,
+.form select{
+    width:100%;
+
+    padding:12px;
+
+    margin:7px 0 15px;
+
+    border:1px solid #cbd5e1;
+
+    border-radius:8px;
+}
+
+.form button{
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#0f766e;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+
+/* RESPONSIVO */
+
+@media(max-width:800px){
+
+    .menu{
+        width:70px;
+    }
+
+    .menu h2{
+        font-size:0;
+    }
+
+    .menu h2::after{
+        content:"TQ";
+
+        font-size:20px;
+    }
+
+    .menu button{
+        font-size:0;
+
+        text-align:center;
+    }
+
+    .menu button::first-letter{
+        font-size:20px;
+    }
+
+    .sair{
+        width:40px !important;
+
+        font-size:0;
+    }
+
+    .conteudo{
+        margin-left:70px;
+
+        padding:15px;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================================
+                    LOGIN
+================================================= -->
+
+<div id="login">
+
+    <div class="login-box">
+
+        <div class="logo">
+            TQ
+        </div>
+
+        <h1>TACQV</h1>
+
+        <p>
+            Tecnologia Aplicada ao Cuidado
+            e Qualidade de Vida
+        </p>
+
+
+        <input
+            type="text"
+            id="cpf"
+            placeholder="Digite seu CPF"
+        >
+
+
+        <input
+            type="password"
+            id="senha"
+            placeholder="Digite sua senha"
+        >
+
+
+        <button onclick="entrar()">
+            ENTRAR NO SISTEMA
+        </button>
+
+
+        <div id="erro">
+
+            ❌ CPF ou senha incorretos!
+
+        </div>
+
+
+        <div class="acesso">
+
+            <b>ACESSO DE TESTE</b>
+
+            <br><br>
+
+            CPF:
+            <b>11111111111</b>
+
+            <br>
+
+            Senha:
+            <b>123456</b>
+
+            <br><br>
+
+            Dados totalmente fictícios.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =================================================
+                 PÁGINA DO SISTEMA
+================================================= -->
+
+<div id="pagina">
+
+
+    <!-- MENU -->
+
+    <div class="menu">
+
+        <h2>
+            TACQV
+        </h2>
+
+
+        <button onclick="mostrar('inicio')">
+            🏠 Início
+        </button>
+
+
+        <button onclick="mostrar('consultas')">
+            📅 Consultas
+        </button>
+
+
+        <button onclick="mostrar('exames')">
+            🧪 Exames
+        </button>
+
+
+        <button onclick="mostrar('medicos')">
+            🩺 Médicos
+        </button>
+
+
+        <button onclick="mostrar('pacientes')">
+            👥 Pacientes
+        </button>
+
+
+        <button onclick="mostrar('perfil')">
+            👤 Meu Perfil
+        </button>
+
+
+        <button
+            class="sair"
+            onclick="sair()"
+        >
+            🚪 Sair
+        </button>
+
+    </div>
+
+
+
+    <!-- CONTEÚDO -->
+
+    <div class="conteudo">
+
+
+        <div class="topo">
+
+            <div>
+
+                <h2>
+                    TACQV
+                </h2>
+
+                <small>
+                    Sistema de Gestão em Saúde
+                </small>
+
+            </div>
+
+
+            <div class="usuario">
+
+                Olá,
+                <span id="nomeUsuario">
+                    Usuário
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- INÍCIO -->
+
+        <div
+            id="inicio"
+            class="secao"
+            style="display:block"
+        >
+
+            <h2>
+                Dashboard
+            </h2>
+
+            <p>
+                Bem-vindo ao sistema TACQV.
+            </p>
+
+            <br>
+
+
+            <div class="cards">
+
+
+                <div class="card">
+
+                    <h3>
+                        Consultas
+                    </h3>
+
+                    <strong>
+                        2
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Exames
+                    </h3>
+
+                    <strong>
+                        3
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Médicos
+                    </h3>
+
+                    <strong>
+                        10
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Unidades
+                    </h3>
+
+                    <strong>
+                        4
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CONSULTAS -->
+
+        <div
+            id="consultas"
+            class="secao"
+        >
+
+            <h2>
+                Marcação de Consultas
+            </h2>
+
+
+            <div class="form">
+
+                <label>
+                    Médico
+                </label>
+
+                <select id="medico">
+
+                    <option>
+                        Dr. Carlos Mendes -
+                        Cardiologia
+                    </option>
+
+                    <option>
+                        Dra. Ana Souza -
+                        Clínica Geral
+                    </option>
+
+                    <option>
+                        Dr. Rafael Oliveira -
+                        Ortopedia
+                    </option>
+
+                    <option>
+                        Dra. Mariana Costa -
+                        Dermatologia
+                    </option>
+
+                    <option>
+                        Dr. Felipe Santos -
+                        Neurologia
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Data
+                </label>
+
+                <input
+                    type="date"
+                    id="dataConsulta"
+                >
+
+
+                <label>
+                    Horário
+                </label>
+
+                <select id="horario">
+
+                    <option>08:00</option>
+                    <option>09:00</option>
+                    <option>10:00</option>
+                    <option>13:00</option>
+                    <option>14:00</option>
+                    <option>15:00</option>
+
+                </select>
+
+
+                <button onclick="agendarConsulta()">
+                    AGENDAR CONSULTA
+                </button>
+
+            </div>
+
+
+            <br>
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Data
+                    </th>
+
+                    <th>
+                        Médico
+                    </th>
+
+                    <th>
+                        Horário
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        25/09/2026
+                    </td>
+
+                    <td>
+                        Dr. Carlos Mendes
+                    </td>
+
+                    <td>
+                        09:00
+                    </td>
+
+                    <td>
+                        Confirmada
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- EXAMES -->
+
+        <div
+            id="exames"
+            class="secao"
+        >
+
+            <h2>
+                Marcação de Exames
+            </h2>
+
+
+            <div class="form">
+
+                <label>
+                    Exame
+                </label>
+
+                <select>
+
+                    <option>
+                        Hemograma completo
+                    </option>
+
+                    <option>
+                        Glicemia
+                    </option>
+
+                    <option>
+                        Colesterol
+                    </option>
+
+                    <option>
+                        Ultrassonografia
+                    </option>
+
+                    <option>
+                        Raio-X
+                    </option>
+
+                    <option>
+                        Tomografia
+                    </option>
+
+                    <option>
+                        Eletrocardiograma
+                    </option>
+
+                    <option>
+                        Ressonância magnética
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Data
+                </label>
+
+                <input type="date">
+
+
+                <label>
+                    Unidade
+                </label>
+
+                <select>
+
+                    <option>
+                        TACQV Centro
+                    </option>
+
+                    <option>
+                        TACQV Norte
+                    </option>
+
+                    <option>
+                        TACQV Sul
+                    </option>
+
+                    <option>
+                        TACQV Hospital
+                    </option>
+
+                </select>
+
+
+                <button onclick="agendarExame()">
+                    AGENDAR EXAME
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MÉDICOS -->
+
+        <div
+            id="medicos"
+            class="secao"
+        >
+
+            <h2>
+                Médicos Disponíveis
+            </h2>
+
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Médico
+                    </th>
+
+                    <th>
+                        Especialidade
+                    </th>
+
+                    <th>
+                        Situação
+                    </th>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Dr. Carlos Mendes
+                    </td>
+
+                    <td>
+                        Cardiologia
+                    </td>
+
+                    <td>
+                        Disponível
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Dra. Ana Souza
+                    </td>
+
+                    <td>
+                        Clínica Geral
+                    </td>
+
+                    <td>
+                        Disponível
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Dr. Rafael Oliveira
+                    </td>
+
+                    <td>
+                        Ortopedia
+                    </td>
+
+                    <td>
+                        Disponível
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Dra. Mariana Costa
+                    </td>
+
+                    <td>
+                        Dermatologia
+                    </td>
+
+                    <td>
+                        Disponível
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Dr. Felipe Santos
+                    </td>
+
+                    <td>
+                        Neurologia
+                    </td>
+
+                    <td>
+                        Disponível
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- PACIENTES -->
+
+        <div
+            id="pacientes"
+            class="secao"
+        >
+
+            <h2>
+                Pacientes
+            </h2>
+
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Nome
+                    </th>
+
+                    <th>
+                        Código
+                    </th>
+
+                    <th>
+                        Situação
+                    </th>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Lucas Almeida
+                    </td>
+
+                    <td>
+                        TACQV001
+                    </td>
+
+                    <td>
+                        Ativo
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Gabriel Santos
+                    </td>
+
+                    <td>
+                        TACQV002
+                    </td>
+
+                    <td>
+                        Ativo
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Ana Clara Souza
+                    </td>
+
+                    <td>
+                        TACQV007
+                    </td>
+
+                    <td>
+                        Ativo
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- PERFIL -->
+
+        <div
+            id="perfil"
+            class="secao"
+        >
+
+            <h2>
+                Meu Perfil
+            </h2>
+
+
+            <p>
+                <b>Nome:</b>
+                <span id="perfilNome"></span>
+            </p>
+
+            <br>
+
+            <p>
+                <b>CPF:</b>
+                <span id="perfilCpf"></span>
+            </p>
+
+            <br>
+
+            <p>
+                <b>Código:</b>
+                TACQV001
+            </p>
+
+            <br>
+
+            <p>
+                <b>Status:</b>
+                Cadastro ativo
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* ============================================
+        USUÁRIOS FICTÍCIOS
+============================================ */
+
+const usuarios = [
+
+    {
+        cpf:"11111111111",
+        senha:"123456",
+        nome:"Lucas Almeida"
+    },
+
+    {
+        cpf:"22222222222",
+        senha:"123457",
+        nome:"Gabriel Santos"
+    },
+
+    {
+        cpf:"33333333333",
+        senha:"123458",
+        nome:"João Oliveira"
+    },
+
+    {
+        cpf:"44444444444",
+        senha:"123459",
+        nome:"Pedro Henrique"
+    },
+
+    {
+        cpf:"55555555555",
+        senha:"123460",
+        nome:"Matheus Costa"
+    },
+
+    {
+        cpf:"66666666666",
+        senha:"123461",
+        nome:"Rafael Martins"
+    },
+
+    {
+        cpf:"77777777777",
+        senha:"123462",
+        nome:"Ana Clara Souza"
+    },
+
+    {
+        cpf:"88888888888",
+        senha:"123463",
+        nome:"Mariana Alves"
+    },
+
+    {
+        cpf:"99999999999",
+        senha:"123464",
+        nome:"Beatriz Lima"
+    },
+
+    {
+        cpf:"00000000000",
+        senha:"123465",
+        nome:"Júlia Ferreira"
+    }
+
+];
+
+
+/* ============================================
+                FUNÇÃO LOGIN
+============================================ */
+
+function entrar(){
+
+    let cpf =
+        document.getElementById("cpf").value;
+
+    let senha =
+        document.getElementById("senha").value;
+
+
+    let usuarioEncontrado =
+        usuarios.find(function(usuario){
+
+            return usuario.cpf === cpf &&
+                   usuario.senha === senha;
+
+        });
+
+
+    if(usuarioEncontrado){
+
+        /* ESCONDE LOGIN */
+
+        document.getElementById("login")
+            .style.display = "none";
+
+
+        /* MOSTRA SISTEMA */
+
+        document.getElementById("pagina")
+            .style.display = "block";
+
+
+        /* MOSTRA NOME */
+
+        document.getElementById("nomeUsuario")
+            .innerText =
+            usuarioEncontrado.nome;
+
+
+        document.getElementById("perfilNome")
+            .innerText =
+            usuarioEncontrado.nome;
+
+
+        document.getElementById("perfilCpf")
+            .innerText =
+            usuarioEncontrado.cpf;
+
+
+        /* REMOVE ERRO */
+
+        document.getElementById("erro")
+            .style.display = "none";
+
+
+    }else{
+
+        /* MOSTRA ERRO */
+
+        document.getElementById("erro")
+            .style.display = "block";
+
+    }
+
+}
+
+
+/* ============================================
+                MENU
+============================================ */
+
+function mostrar(id){
+
+    let secoes =
+        document.querySelectorAll(".secao");
+
+
+    secoes.forEach(function(secao){
+
+        secao.style.display = "none";
+
+    });
+
+
+    document.getElementById(id)
+        .style.display = "block";
+
+}
+
+
+/* ============================================
+              AGENDAR CONSULTA
+============================================ */
+
+function agendarConsulta(){
+
+    let data =
+        document.getElementById("dataConsulta").value;
+
+    if(data === ""){
+
+        alert("Escolha uma data.");
+
+        return;
+
+    }
+
+
+    alert(
+        "Consulta agendada com sucesso!"
+    );
+
+}
+
+
+/* ============================================
+                AGENDAR EXAME
+============================================ */
+
+function agendarExame(){
+
+    alert(
+        "Exame agendado com sucesso!"
+    );
+
+}
+
+
+/* ============================================
+                    SAIR
+============================================ */
+
+function sair(){
+
+    document.getElementById("pagina")
+        .style.display = "none";
+
+
+    document.getElementById("login")
+        .style.display = "flex";
+
+
+    document.getElementById("cpf")
+        .value = "";
+
+    document.getElementById("senha")
+        .value = "";
+
+}
+
+</script>
+
+</body>
+
+</html>

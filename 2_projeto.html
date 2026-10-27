@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TACQV - Sistema de Saúde</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f1f5f9;
+    color:#1e293b;
+}
+
+/* ================= LOGIN ================= */
+
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f766e,#0891b2);
+    padding:20px;
+}
+
+.login-box{
+    width:420px;
+    max-width:100%;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,.2);
+}
+
+.logo{
+    width:75px;
+    height:75px;
+    margin:auto;
+    background:#0f766e;
+    color:white;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.login-box h1{
+    text-align:center;
+    margin-top:15px;
+    color:#0f766e;
+}
+
+.login-box p{
+    text-align:center;
+    color:#64748b;
+    margin:8px 0 25px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+.input-group input{
+    width:100%;
+    padding:13px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+}
+
+.input-group input:focus{
+    border-color:#0f766e;
+}
+
+.password-box{
+    position:relative;
+}
+
+.password-box button{
+    position:absolute;
+    right:8px;
+    top:7px;
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.login-button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#0f766e;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-button:hover{
+    background:#115e59;
+}
+
+.error{
+    display:none;
+    margin-top:15px;
+    padding:10px;
+    background:#fee2e2;
+    color:#b91c1c;
+    border-radius:8px;
+    text-align:center;
+}
+
+.demo{
+    margin-top:20px;
+    padding:12px;
+    background:#f0fdfa;
+    border-radius:10px;
+    font-size:13px;
+    text-align:center;
+}
+
+/* ================= SISTEMA ================= */
+
+#systemPage{
+    display:none;
+}
+
+header{
+    height:70px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    border-bottom:1px solid #e2e8f0;
+}
+
+.header-logo{
+    color:#0f766e;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.user-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#0f766e;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:70px;
+    bottom:0;
+    width:230px;
+    background:#0f172a;
+    padding:20px 12px;
+}
+
+.sidebar button{
+    width:100%;
+    padding:13px;
+    margin-bottom:6px;
+    border:none;
+    background:transparent;
+    color:#cbd5e1;
+    text-align:left;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.sidebar button:hover,
+.sidebar button.active{
+    background:#0f766e;
+    color:white;
+}
+
+/* CONTENT */
+
+.content{
+    margin-left:230px;
+    padding:30px;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.title{
+    margin-bottom:25px;
+}
+
+.title h2{
+    font-size:27px;
+}
+
+.title p{
+    color:#64748b;
+    margin-top:5px;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.card h3{
+    color:#64748b;
+    font-size:14px;
+}
+
+.card strong{
+    display:block;
+    font-size:30px;
+    margin-top:10px;
+    color:#0f766e;
+}
+
+/* TABELAS */
+
+.table-box{
+    background:white;
+    margin-top:25px;
+    padding:20px;
+    border-radius:15px;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:13px;
+    border-bottom:1px solid #e2e8f0;
+    text-align:left;
+}
+
+th{
+    color:#475569;
+    background:#f8fafc;
+}
+
+.status{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    background:#dcfce7;
+    color:#166534;
+}
+
+/* FORM */
+
+.form-box{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    max-width:800px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+}
+
+.form-button{
+    margin-top:20px;
+    padding:12px 20px;
+    border:none;
+    background:#0f766e;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* PERFIL */
+
+.profile{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    max-width:700px;
+}
+
+.profile-avatar{
+    width:90px;
+    height:90px;
+    background:#0f766e;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.profile p{
+    margin:12px 0;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:900px){
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .sidebar{
+        width:70px;
+    }
+
+    .sidebar button{
+        font-size:0;
+        text-align:center;
+    }
+
+    .sidebar button:first-letter{
+        font-size:20px;
+    }
+
+    .content{
+        margin-left:70px;
+        padding:15px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    header{
+        padding:0 15px;
+    }
+
+    .user-header span{
+        display:none;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginPage">
+
+    <div class="login-box">
+
+        <div class="logo">TQ</div>
+
+        <h1>TACQV</h1>
+
+        <p>
+            Tecnologia Aplicada ao Cuidado e Qualidade de Vida
+        </p>
+
+        <div class="input-group">
+
+            <label>CPF</label>
+
+            <input
+                type="text"
+                id="cpf"
+                maxlength="11"
+                placeholder="Digite seu CPF"
+            >
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Senha</label>
+
+            <div class="password-box">
+
+                <input
+                    type="password"
+                    id="senha"
+                    placeholder="Digite sua senha"
+                >
+
+                <button onclick="mostrarSenha()">👁️</button>
+
+            </div>
+
+        </div>
+
+        <button class="login-button" onclick="entrar()">
+            ENTRAR
+        </button>
+
+        <div id="erro" class="error">
+            CPF ou senha incorretos.
+        </div>
+
+        <div class="demo">
+
+            <strong>Acesso demonstrativo</strong><br><br>
+
+            CPF: 11111111111<br>
+            Senha: 123456
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= SISTEMA ================= -->
+
+<div id="systemPage">
+
+<header>
+
+    <div class="header-logo">
+        TACQV
+    </div>
+
+    <div class="user-header">
+
+        <span id="headerNome">
+            Usuário
+        </span>
+
+        <div class="avatar" id="headerAvatar">
+            U
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MENU ================= -->
+
+<div class="sidebar">
+
+    <button class="active" onclick="abrir('inicio',this)">
+        🏠 Início
+    </button>
+
+    <button onclick="abrir('consultas',this)">
+        📅 Consultas
+    </button>
+
+    <button onclick="abrir('exames',this)">
+        🧪 Exames
+    </button>
+
+    <button onclick="abrir('medicos',this)">
+        👨‍⚕️ Médicos
+    </button>
+
+    <button onclick="abrir('pacientes',this)">
+        👥 Pacientes
+    </button>
+
+    <button onclick="abrir('historico',this)">
+        📋 Histórico
+    </button>
+
+    <button onclick="abrir('perfil',this)">
+        👤 Meu Perfil
+    </button>
+
+    <button onclick="sair()">
+        🚪 Sair
+    </button>
+
+</div>
+
+
+<div class="content">
+
+<!-- ================= INÍCIO ================= -->
+
+<section id="inicio" class="section active">
+
+    <div class="title">
+
+        <h2>Olá, <span id="nomeInicio">Usuário</span> 👋</h2>
+
+        <p>
+            Bem-vindo ao sistema TACQV.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Consultas</h3>
+            <strong>02</strong>
+        </div>
+
+        <div class="card">
+            <h3>Exames</h3>
+            <strong>02</strong>
+        </div>
+
+        <div class="card">
+            <h3>Médicos</h3>
+            <strong>10</strong>
+        </div>
+
+        <div class="card">
+            <h3>Histórico</h3>
+            <strong>04</strong>
+        </div>
+
+    </div>
+
+
+    <div class="table-box">
+
+        <h3>Próximas consultas</h3>
+
+        <br>
+
+        <table>
+
+            <tr>
+                <th>Médico</th>
+                <th>Especialidade</th>
+                <th>Data</th>
+                <th>Horário</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>Dr. Carlos Mendes</td>
+                <td>Cardiologia</td>
+                <td>25/09/2026</td>
+                <td>09:00</td>
+                <td>
+                    <span class="status">Confirmado</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Dra. Ana Souza</td>
+                <td>Clínica Geral</td>
+                <td>02/10/2026</td>
+                <td>14:00</td>
+                <td>
+                    <span class="status">Pendente</span>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONSULTAS ================= -->
+
+<section id="consultas" class="section">
+
+    <div class="title">
+
+        <h2>Agendamento de Consultas</h2>
+
+        <p>
+            Escolha o médico, a data e o horário.
+        </p>
+
+    </div>
+
+
+    <div class="form-box">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Médico</label>
+
+                <select id="medicoConsulta">
+
+                    <option>Dr. Carlos Mendes</option>
+                    <option>Dra. Ana Souza</option>
+                    <option>Dr. Rafael Oliveira</option>
+                    <option>Dra. Mariana Costa</option>
+                    <option>Dr. Felipe Santos</option>
+                    <option>Dra. Juliana Lima</option>
+                    <option>Dr. Eduardo Martins</option>
+                    <option>Dra. Camila Ferreira</option>
+                    <option>Dr. Bruno Almeida</option>
+                    <option>Dra. Fernanda Rocha</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Data</label>
+
+                <input type="date" id="dataConsulta">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Horário</label>
+
+                <select id="horaConsulta">
+
+                    <option>08:00</option>
+                    <option>09:00</option>
+                    <option>10:00</option>
+                    <option>11:00</option>
+                    <option>13:00</option>
+                    <option>14:00</option>
+                    <option>15:00</option>
+                    <option>16:00</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <button class="form-button" onclick="agendarConsulta()">
+            Agendar consulta
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= EXAMES ================= -->
+
+<section id="exames" class="section">
+
+    <div class="title">
+
+        <h2>Agendamento de Exames</h2>
+
+        <p>
+            Selecione o exame e a unidade.
+        </p>
+
+    </div>
+
+
+    <div class="form-box">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Exame</label>
+
+                <select id="exame">
+
+                    <option>Hemograma completo</option>
+                    <option>Glicemia</option>
+                    <option>Colesterol</option>
+                    <option>Exame de urina</option>
+                    <option>Ultrassonografia</option>
+                    <option>Raio-X</option>
+                    <option>Tomografia</option>
+                    <option>Ressonância magnética</option>
+                    <option>Eletrocardiograma</option>
+                    <option>TSH</option>
+                    <option>Vitamina D</option>
+                    <option>Creatinina</option>
+                    <option>Ecocardiograma</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Data</label>
+
+                <input type="date" id="dataExame">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Unidade</label>
+
+                <select id="unidade">
+
+                    <option>TACQV Centro</option>
+                    <option>TACQV Norte</option>
+                    <option>TACQV Sul</option>
+                    <option>TACQV Hospital</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <button class="form-button" onclick="agendarExame()">
+            Agendar exame
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MÉDICOS ================= -->
+
+<section id="medicos" class="section">
+
+    <div class="title">
+
+        <h2>Profissionais</h2>
+
+        <p>
+            Médicos disponíveis no TACQV.
+        </p>
+
+    </div>
+
+
+    <div class="table-box">
+
+        <table>
+
+            <tr>
+                <th>Médico</th>
+                <th>Especialidade</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>Dr. Carlos Mendes</td>
+                <td>Cardiologia</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dra. Ana Souza</td>
+                <td>Clínica Geral</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dr. Rafael Oliveira</td>
+                <td>Ortopedia</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dra. Mariana Costa</td>
+                <td>Dermatologia</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dr. Felipe Santos</td>
+                <td>Neurologia</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dra. Juliana Lima</td>
+                <td>Pediatria</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dr. Eduardo Martins</td>
+                <td>Oftalmologia</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dra. Camila Ferreira</td>
+                <td>Ginecologia</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dr. Bruno Almeida</td>
+                <td>Urologia</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+            <tr>
+                <td>Dra. Fernanda Rocha</td>
+                <td>Endocrinologia</td>
+                <td><span class="status">Disponível</span></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PACIENTES ================= -->
+
+<section id="pacientes" class="section">
+
+    <div class="title">
+
+        <h2>Pacientes</h2>
+
+        <p>
+            Cadastro de pacientes fictícios.
+        </p>
+
+    </div>
+
+
+    <div class="table-box">
+
+        <table>
+
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>TACQV001</td>
+                <td>Lucas Almeida</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV002</td>
+                <td>Gabriel Santos</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV003</td>
+                <td>João Oliveira</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV004</td>
+                <td>Pedro Henrique</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV005</td>
+                <td>Matheus Costa</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV006</td>
+                <td>Rafael Martins</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV007</td>
+                <td>Ana Clara Souza</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV008</td>
+                <td>Mariana Alves</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV009</td>
+                <td>Beatriz Lima</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+            <tr>
+                <td>TACQV010</td>
+                <td>Júlia Ferreira</td>
+                <td><span class="status">Ativo</span></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HISTÓRICO ================= -->
+
+<section id="historico" class="section">
+
+    <div class="title">
+
+        <h2>Histórico</h2>
+
+        <p>
+            Histórico de consultas e exames.
+        </p>
+
+    </div>
+
+
+    <div class="table-box">
+
+        <table>
+
+            <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>15/08/2026</td>
+                <td>Consulta</td>
+                <td>Clínica Geral</td>
+                <td><span class="status">Concluído</span></td>
+            </tr>
+
+            <tr>
+                <td>20/08/2026</td>
+                <td>Exame</td>
+                <td>Hemograma</td>
+                <td><span class="status">Concluído</span></td>
+            </tr>
+
+            <tr>
+                <td>28/08/2026</td>
+                <td>Exame</td>
+                <td>Glicemia</td>
+                <td><span class="status">Concluído</span></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PERFIL ================= -->
+
+<section id="perfil" class="section">
+
+    <div class="title">
+
+        <h2>Meu Perfil</h2>
+
+        <p>
+            Informações do usuário conectado.
+        </p>
+
+    </div>
+
+
+    <div class="profile">
+
+        <div class="profile-avatar" id="profileAvatar">
+            U
+        </div>
+
+        <p>
+            <strong>Nome:</strong>
+            <span id="profileNome"></span>
+        </p>
+
+        <p>
+            <strong>CPF:</strong>
+            <span id="profileCpf"></span>
+        </p>
+
+        <p>
+            <strong>Código:</strong>
+            <span id="profileCodigo"></span>
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            <span class="status">Conta ativa</span>
+        </p>
+
+    </div>
+
+</section>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ================= USUÁRIOS ================= */
+
+const usuarios = [
+
+    {
+        cpf:"11111111111",
+        senha:"123456",
+        nome:"Lucas Almeida",
+        codigo:"TACQV001"
+    },
+
+    {
+        cpf:"22222222222",
+        senha:"123457",
+        nome:"Gabriel Santos",
+        codigo:"TACQV002"
+    },
+
+    {
+        cpf:"33333333333",
+        senha:"123458",
+        nome:"João Oliveira",
+        codigo:"TACQV003"
+    },
+
+    {
+        cpf:"44444444444",
+        senha:"123459",
+        nome:"Pedro Henrique",
+        codigo:"TACQV004"
+    },
+
+    {
+        cpf:"55555555555",
+        senha:"123460",
+        nome:"Matheus Costa",
+        codigo:"TACQV005"
+    },
+
+    {
+        cpf:"66666666666",
+        senha:"123461",
+        nome:"Rafael Martins",
+        codigo:"TACQV006"
+    },
+
+    {
+        cpf:"77777777777",
+        senha:"123462",
+        nome:"Ana Clara Souza",
+        codigo:"TACQV007"
+    },
+
+    {
+        cpf:"88888888888",
+        senha:"123463",
+        nome:"Mariana Alves",
+        codigo:"TACQV008"
+    },
+
+    {
+        cpf:"99999999999",
+        senha:"123464",
+        nome:"Beatriz Lima",
+        codigo:"TACQV009"
+    },
+
+    {
+        cpf:"00000000000",
+        senha:"123465",
+        nome:"Júlia Ferreira",
+        codigo:"TACQV010"
+    }
+
+];
+
+
+/* ================= LOGIN ================= */
+
+function entrar(){
+
+    let cpf = document.getElementById("cpf").value.trim();
+
+    let senha = document.getElementById("senha").value.trim();
+
+    let usuario = usuarios.find(
+        u => u.cpf === cpf && u.senha === senha
+    );
+
+
+    if(usuario){
+
+        document.getElementById("loginPage").style.display="none";
+
+        document.getElementById("systemPage").style.display="block";
+
+        document.getElementById("erro").style.display="none";
+
+
+        document.getElementById("headerNome").innerText =
+            usuario.nome;
+
+        document.getElementById("nomeInicio").innerText =
+            usuario.nome.split(" ")[0];
+
+
+        document.getElementById("headerAvatar").innerText =
+            usuario.nome.charAt(0);
+
+        document.getElementById("profileAvatar").innerText =
+            usuario.nome.charAt(0);
+
+
+        document.getElementById("profileNome").innerText =
+            usuario.nome;
+
+        document.getElementById("profileCpf").innerText =
+            usuario.cpf;
+
+        document.getElementById("profileCodigo").innerText =
+            usuario.codigo;
+
+    }
+
+    else{
+
+        document.getElementById("erro").style.display="block";
+
+    }
+
+}
+
+
+/* ================= MOSTRAR SENHA ================= */
+
+function mostrarSenha(){
+
+    let campo = document.getElementById("senha");
+
+    if(campo.type === "password"){
+
+        campo.type="text";
+
+    }else{
+
+        campo.type="password";
+
+    }
+
+}
+
+
+/* ================= MENU ================= */
+
+function abrir(id, botao){
+
+    let secoes =
+        document.querySelectorAll(".section");
+
+    secoes.forEach(secao => {
+
+        secao.classList.remove("active");
+
+    });
+
+
+    document.getElementById(id)
+        .classList.add("active");
+
+
+    let botoes =
+        document.querySelectorAll(".sidebar button");
+
+    botoes.forEach(b => {
+
+        b.classList.remove("active");
+
+    });
+
+
+    botao.classList.add("active");
+
+}
+
+
+/* ================= AGENDAR CONSULTA ================= */
+
+function agendarConsulta(){
+
+    let medico =
+        document.getElementById("medicoConsulta").value;
+
+    let data =
+        document.getElementById("dataConsulta").value;
+
+    let hora =
+        document.getElementById("horaConsulta").value;
+
+
+    if(data === ""){
+
+        alert("Selecione uma data.");
+
+        return;
+
+    }
+
+
+    alert(
+        "Consulta agendada com sucesso!\n\n" +
+        "Médico: " + medico +
+        "\nData: " + data +
+        "\nHorário: " + hora
+    );
+
+}
+
+
+/* ================= AGENDAR EXAME ================= */
+
+function agendarExame(){
+
+    let exame =
+        document.getElementById("exame").value;
+
+    let data =
+        document.getElementById("dataExame").value;
+
+    let unidade =
+        document.getElementById("unidade").value;
+
+
+    if(data === ""){
+
+        alert("Selecione uma data.");
+
+        return;
+
+    }
+
+
+    alert(
+        "Exame agendado com sucesso!\n\n" +
+        "Exame: " + exame +
+        "\nData: " + data +
+        "\nUnidade: " + unidade
+    );
+
+}
+
+
+/* ================= SAIR ================= */
+
+function sair(){
+
+    document.getElementById("systemPage").style.display="none";
+
+    document.getElementById("loginPage").style.display="flex";
+
+    document.getElementById("cpf").value="";
+
+    document.getElementById("senha").value="";
+
+}
+
+</script>
+
+</body>
+</html>

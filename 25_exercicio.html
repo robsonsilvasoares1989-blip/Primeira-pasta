@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" name="" id="">
+    <h3>Lista de alimentos</h3>
+    <ol type="I"></ol>
+    <button id="inicio">Adicionar Inicio</button>
+    <button id="removerInicio">Remover inicio</button>
+    <button id="final">Adicionar final</button>
+    <button id="removerFinal">Remover final</button>
+    <script>
+        let input = document.querySelector('input');
+        let lista = document.querySelector('ol');
+        let adicionarInicio = document.querySelector('#inicio'); 
+        let removerInicio = document.querySelector('#removerInicio');
+        let adicionarFinal = document.querySelector('#final');
+        let removerFinal =  document.querySelector('#removerFinal');
+
+        adicionarInicio.addEventListener('click', function(){
+            if(input.value != ''){
+            let li = document.createElement('li');
+            li.textContent = input.value;
+            lista.prepend(li);
+            input.value = '';}
+        })
+
+        adicionarFinal.addEventListener('click', function(){
+            if(input.value != ''){
+            let li = document.createElement('li');
+            li.textContent = input.value;
+            lista.appendChild(li);
+            input.value = '';}
+        })
+
+        removerInicio.addEventListener('click', function(){
+            lista.firstElementChild.remove()
+        })
+
+        removerFinal.addEventListener('click', function(){
+            lista.lastElementChild.remove()
+        })
+
+    </script>
+</body>
+</html>
